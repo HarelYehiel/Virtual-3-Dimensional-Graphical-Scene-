@@ -8,6 +8,7 @@ public class Point {
     public Point(double x, double y, double z) {
         xyz = new Double3(x, y, z);
     }
+    public  Point(Double3 dbl) {xyz = new Double3(dbl.d1,dbl.d2,dbl.d2);}
 
     @Override
     public boolean equals(Object o) {
@@ -24,7 +25,7 @@ public class Point {
 
     public Point add(Vector v) {
         Double3 d = xyz.add(v.xyz);
-        return new Point(d.d1, d.d2, d.d3);
+        return new Point(d);
     }
 
     /**
@@ -33,7 +34,7 @@ public class Point {
      */
     public Vector subtact(Point p) {
         Double3 d = xyz.subtract(p.xyz);
-        return new Vector(d.d1, d.d2, d.d3);
+        return new Vector(d);
     }
 
     public double distanceSquered(Point p) {
@@ -45,6 +46,4 @@ public class Point {
     public double distance(Point p) {
         return Math.sqrt(distanceSquered(p));
     }
-
-
 }
