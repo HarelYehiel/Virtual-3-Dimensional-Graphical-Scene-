@@ -10,10 +10,6 @@ public class Point {
     }
     public  Point(Double3 dbl) {xyz = new Double3(dbl.d1,dbl.d2,dbl.d2);}
 
-    public Double3 getXyz() {
-        return xyz;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

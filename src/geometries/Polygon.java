@@ -1,23 +1,21 @@
 package geometries;
 
-import primitives.Point;
-import primitives.Vector;
-
 import java.util.List;
 
+import primitives.*;
 import static primitives.Util.*;
 
 /**
  * Polygon class represents two-dimensional polygon in 3D Cartesian coordinate
  * system
- * 
+ *
  * @author Dan
  */
 public class Polygon implements Geometry {
 	/**
 	 * List of polygon's vertices
 	 */
-		protected List<Point> vertices;
+	protected List<Point> vertices;
 	/**
 	 * Associated plane in which the polygon lays
 	 */
@@ -27,7 +25,7 @@ public class Polygon implements Geometry {
 	/**
 	 * Polygon constructor based on vertices list. The list must be ordered by edge
 	 * path. The polygon must be convex.
-	 * 
+	 *
 	 * @param vertices list of vertices according to their order by edge path
 	 * @throws IllegalArgumentException in any case of illegal combination of
 	 *                                  vertices:
@@ -89,24 +87,5 @@ public class Polygon implements Geometry {
 	@Override
 	public Vector getNormal(Point point) {
 		return plane.getNormal();
-	}
-
-	public List<Point> getVertices() {
-		return vertices;
-	}
-
-	@Override
-	public String toString() {
-		return "vertices=" + vertices +
-				", plane=" + plane +
-				", size=" + size;
-	}
-
-	public Plane getPlane() {
-		return plane;
-	}
-
-	public int getSize() {
-		return size;
 	}
 }
