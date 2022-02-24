@@ -10,6 +10,10 @@ public class Point {
     }
     public  Point(Double3 dbl) {xyz = new Double3(dbl.d1,dbl.d2,dbl.d2);}
 
+    public Double3 getXyz() {
+        return xyz;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -32,7 +36,7 @@ public class Point {
      * @param p
      * @return
      */
-    public Vector subtact(Point p) {
+    public Vector subtract(Point p) {
         Double3 d = xyz.subtract(p.xyz);
         return new Vector(d);
     }

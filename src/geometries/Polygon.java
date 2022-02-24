@@ -1,5 +1,8 @@
 package geometries;
 
+import primitives.Point;
+import primitives.Vector;
+
 import java.util.List;
 
 import static primitives.Util.*;
@@ -14,7 +17,7 @@ public class Polygon implements Geometry {
 	/**
 	 * List of polygon's vertices
 	 */
-	protected List<Point> vertices;
+		protected List<Point> vertices;
 	/**
 	 * Associated plane in which the polygon lays
 	 */
@@ -86,5 +89,24 @@ public class Polygon implements Geometry {
 	@Override
 	public Vector getNormal(Point point) {
 		return plane.getNormal();
+	}
+
+	public List<Point> getVertices() {
+		return vertices;
+	}
+
+	@Override
+	public String toString() {
+		return "vertices=" + vertices +
+				", plane=" + plane +
+				", size=" + size;
+	}
+
+	public Plane getPlane() {
+		return plane;
+	}
+
+	public int getSize() {
+		return size;
 	}
 }
