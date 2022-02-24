@@ -1,33 +1,73 @@
 package primitives;
 
+/**
+ * A vector is an object with size and direction Vector from the beginning of
+ * the axes to a certain point Builders : a) three coordinates, b) three
+ * double-digit numbers, c) a Point3D .* Copy builder not exist !
+ */
 public class Vector extends Point {
+    /**
+     * Constructor that initialize this.xyz,
+     * by three double
+     * @param x
+     * @param y
+     * @param z
+     */
     public Vector(double x, double y, double z){
         super(x,y,z);
         if (xyz.equals(Double3.ZERO))
             throw new IllegalArgumentException("Vector must be different from 0");
     }
+
+    /**
+     * Constructor that initialize this.xyz,
+     * by element kind Double3.
+     * @param dbl
+     */
     public  Vector(Double3 dbl) {
         super(dbl);
         if (xyz.equals(Double3.ZERO))
             throw new IllegalArgumentException("Vector must be different from 0");
     }
 
+    /**
+     *
+     * @return this.xyz.
+     */
     public Double3 getVector(){ return xyz;}
 
+    /**
+     * Equals between two points.
+     * @param o
+     * @return boolean
+     */
     @Override
     public boolean equals(Object o) {
         return super.equals(o);
     }
 
+    /**
+     * @return the details: xyz.
+     */
     @Override
     public String toString() {
         return super.toString();
     }
 
+    /**
+     *  New Vector = add v to this.xyz.
+     * @param v
+     * @return new Vector
+     */
     public  Vector Add(Vector v){
         return new Vector(xyz.add(v.xyz));
     }
 
+    /**
+     * New Vector = v (Vector) * num.
+     * @param num
+     * @return new vector
+     */
     public Vector scale(double num){
         return new Vector(xyz.scale(num));
     }
