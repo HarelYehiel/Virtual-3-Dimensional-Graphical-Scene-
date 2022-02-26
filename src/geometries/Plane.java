@@ -9,7 +9,7 @@ import primitives.Vector;
  */
 public class Plane implements Geometry{
 
-   private Point q0;
+    private Point q0;
     private Vector normal;
 
     /**
@@ -48,13 +48,13 @@ public class Plane implements Geometry{
 
     /**
      * Constructor that initialize the q0 and normal.
-     * normal = normal of vector.
+     * normal = vector.
      * @param q0
      * @param vector
      */
     public Plane(Point q0, Vector vector) {
         this.q0 = q0;
-        this.normal = getNormal( new Point(vector.getVector()));
+        this.normal = vector.normalize();
     }
 
     /**

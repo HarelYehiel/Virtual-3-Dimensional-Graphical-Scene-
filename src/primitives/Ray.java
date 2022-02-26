@@ -9,8 +9,8 @@ import java.util.Objects;
  */
 public class Ray {
 
-    Point p0;
-    Vector dir;
+    final Point p0;
+    final Vector dir;
 
     /**
      * Constructor that initialize the p0 and dir.

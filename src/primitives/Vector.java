@@ -79,19 +79,36 @@ public class Vector extends Point {
         return new Vector(x,y,z);
     }
 
+    /**
+     * A scalar product of two vectors
+     * @param v
+     * @return scalar (double)
+     */
     public double dotProduct(Vector v){
         Double3 prod = xyz.product(v.xyz);
         return prod.d1 + prod.d2 + prod.d3;
     }
 
+    /**
+     * Calculate the length of the vector squared
+     * @return scalar (double)
+     */
     public double lengthSquared(){
         return dotProduct(this);
     }
 
+    /**
+     * Calculate the length of the vector
+     * @return scalar (double)
+     */
     public double length(){
         return Math.sqrt(lengthSquared());
     }
 
+    /**
+     * Normalizes the vector (makes it size 1)
+     * @return new Vector normalized
+     */
     public Vector normalize(){
         double len = length();
         return new Vector(xyz.d1/len,xyz.d2/len,xyz.d3/len);
