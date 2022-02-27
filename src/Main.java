@@ -1,6 +1,8 @@
 import primitives.*;
 import static java.lang.System.out;
 import static primitives.Util.*;
+//Alexander Sychev 326882057 alexsychev27@gmail.com
+//Ehiel Harel 316334259 hareljct1@gmail.com
 
 /**
  * Test program for the 1st stage
