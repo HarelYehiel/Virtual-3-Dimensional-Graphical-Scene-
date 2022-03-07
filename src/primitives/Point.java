@@ -6,7 +6,7 @@ import java.util.Objects;
  * A point in three-dimensional space of this shape: (x,y,z)
  */
 public class Point {
-    final Double3 xyz;
+    Double3 xyz;
 
     /**
      * Constructor that initialize this.xyz.

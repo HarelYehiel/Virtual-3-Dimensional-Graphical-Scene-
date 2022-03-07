@@ -9,7 +9,7 @@ import primitives.Vector;
  */
 public class Tube implements Geometry{
 
-   protected Ray axisRay;
+    protected Ray axisRay;
     protected  double radius;
 
     /**
