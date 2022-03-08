@@ -1,4 +1,5 @@
 package primitives;
+import static primitives.Util.*;
 
 /**
  * A vector is an object with size and direction Vector from the beginning of
@@ -76,7 +77,12 @@ public class Vector extends Point {
         double x = xyz.d2 * v.xyz.d3 - xyz.d3 * v.xyz.d2;
         double y = xyz.d3 * v.xyz.d1 - xyz.d1 * v.xyz.d3;
         double z = xyz.d1 * v.xyz.d2 - xyz.d2 * v.xyz.d1;
-        return new Vector(x,y,z);
+
+        Vector v1 = new Vector(x,y,z);
+        if(isZero(v1.lengthSquared()))
+            throw new IllegalArgumentException("ERROR: crossProduct for parallel vectors");
+
+        return v1;
     }
 
     /**

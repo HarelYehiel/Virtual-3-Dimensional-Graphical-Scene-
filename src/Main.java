@@ -18,6 +18,8 @@ public final class Main {
 	 */
 	public static void main(String[] args) {
 
+		double d = Math.sqrt(29);
+
 		try { // test zero vector
 			new Vector(0, 0, 0);
 			out.println("ERROR: zero vector does not throw an exception");
