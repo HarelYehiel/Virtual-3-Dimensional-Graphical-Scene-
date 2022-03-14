@@ -96,6 +96,16 @@ public class Vector extends Point {
     }
 
     /**
+     * subtract from this.xyz to v by subtract(v.xyz) of class Double3.
+     * @param v is the Vector need to subtract.
+     * @return new Vector.
+     */
+    public Vector subtract(Vector v) {
+        Double3 d = xyz.subtract(v.xyz);
+        return new Vector(d);
+    }
+
+    /**
      * Calculate the length of the vector squared
      * @return scalar (double)
      */

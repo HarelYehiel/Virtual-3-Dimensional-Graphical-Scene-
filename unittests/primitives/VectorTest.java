@@ -1,5 +1,6 @@
 package primitives;
 import static java.lang.System.out;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static primitives.Util.*;
 
 import org.junit.jupiter.api.Test;
@@ -18,7 +19,12 @@ class VectorTest {
                 "ERROR: Vector + Vector does not work correctly");
 
     }
-
+    @Test
+    void subtract() {
+        Vector v1 = new Vector(1, 2, 3);
+        assertEquals(new Vector(1, 1, 1), (new Vector(2, 3, 4).subtract(v1))
+                ,"ERROR: Point - Point does not work correctly");
+    }
     @Test
     void scale() {
         assertEquals(v1.scale(5), new Vector(5, 10, 15),
@@ -71,6 +77,9 @@ class VectorTest {
 
     @Test
     void normalize() {
+        Vector u = v1.normalize();
+        assertTrue(!isZero(u.length() - 1), "ERROR: the normalized vector is not a unit vector");
+
     }
 
 }
