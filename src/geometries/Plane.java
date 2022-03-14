@@ -46,16 +46,16 @@ public class Plane implements Geometry{
         if(q0.equals(q1) || q0.equals(q2) || q1.equals(q2))
             throw new IllegalArgumentException("All vertices of a Plane need to be different");
 
-        {
+
             Vector v0 = q0.subtract(q1);
             Vector v1 = q0.subtract(q2);
             Vector v2 = v1.crossProduct(v0);
             if(Util.isZero(v2.lengthSquared()))
                 throw new IllegalArgumentException("All vertices of a Plane need not to be on the same line");
-        }
+
 
         this.q0 = q0;
-        normal = null;
+        normal = v0.crossProduct(v1).normalize();
     }
 
     /**
@@ -76,6 +76,6 @@ public class Plane implements Geometry{
      */
     @Override
     public Vector getNormal(Point p) {
-        return null;
+        return normal;
     }
 }

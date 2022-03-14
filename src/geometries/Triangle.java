@@ -1,6 +1,7 @@
 package geometries;
 
 import primitives.Point;
+import primitives.Vector;
 
 import java.util.ArrayList;
 import java.util.Collections;
