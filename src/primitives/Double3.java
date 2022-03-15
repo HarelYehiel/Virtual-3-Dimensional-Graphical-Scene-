@@ -33,6 +33,11 @@ public class Double3 {
 		this.d3 = d3;
 	}
 
+	/**
+	 * Equals between two Double3.
+	 * @param o
+	 * @return boolean
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -50,6 +55,9 @@ public class Double3 {
 		return (int) Math.round(d1 + d2 + d3);
 	}
 
+	/**
+	 * @return the details: d1, d2, d3.
+	 */
 	@Override
 	public String toString() {
 		return "(" + d1 + "," + d2 + "," + d3 + ")";

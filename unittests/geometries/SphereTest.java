@@ -8,15 +8,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class SphereTest {
-
-    @Test
-    void getCenter() {
-    }
-
-    @Test
-    void getRadius() {
-    }
-
+    /**
+     * Test method for {@link Sphere#getNormal(Point)}.
+     */
     @Test
     void getNormal() {
         Sphere s = new Sphere(new Point(0,0,0),3);

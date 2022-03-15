@@ -50,7 +50,7 @@ public class Tube implements Geometry{
     /**
      * Return the normal of p (Point).
      * @param p
-     * @return
+     * @return the normal.
      */
     @Override
     public Vector getNormal(Point p) {

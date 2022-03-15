@@ -22,6 +22,9 @@ class PlaneTest {
                 ,"Constructed a plane with vertices on the same line.");
     }
 
+    /**
+     * Test method for {@link Plane#getNormal()}.
+     */
     @Test
     void getNormal() {
         Plane p =  new Plane(new Point(2,7,1),new Point(1,12,3),new Point(3,6,9));

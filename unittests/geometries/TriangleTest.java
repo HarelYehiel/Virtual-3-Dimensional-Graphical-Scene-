@@ -8,7 +8,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TriangleTest {
 
-
+    /**
+     * Test method for {@link Triangle#getNormal(Point)}.
+     */
     @Test
     void getNormal() {
         Triangle t = new Triangle(new Point(2,7,1),new Point(1,12,3),new Point(3,6,9));

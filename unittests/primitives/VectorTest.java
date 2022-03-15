@@ -13,18 +13,29 @@ class VectorTest {
     Vector v2 = new Vector(-2, -4, -6);
     Vector v3 = new Vector(0, 3, -2);
 
+    /**
+     * Test method for {@link Vector#add(Vector)}.
+     */
     @Test
     void add() {
         assertEquals(v1.add(new Vector(-1, -2, -3)), (new Point(0, 0, 0)),
                 "ERROR: Vector + Vector does not work correctly");
 
     }
+
+    /**
+     * Test method for {@link Vector#subtract(Vector)}.
+     */
     @Test
     void subtract() {
         Vector v1 = new Vector(1, 2, 3);
         assertEquals(new Vector(1, 1, 1), (new Vector(2, 3, 4).subtract(v1))
                 ,"ERROR: Point - Point does not work correctly");
     }
+
+    /**
+     * Test method for {@link Vector#scale(double)}.
+     */
     @Test
     void scale() {
         assertEquals(v1.scale(5), new Vector(5, 10, 15),
@@ -32,7 +43,7 @@ class VectorTest {
     }
 
     /**
-     * Test method for {@link primitives.Vector#crossProduct(primitives.Vector)}.
+     * Test method for {@link Vector#crossProduct(Vector)}.
      */
     @Test
     public void testCrossProduct() {
@@ -58,6 +69,9 @@ class VectorTest {
 
     }
 
+    /**
+     * Test method for {@link Vector#dotProduct(Vector)}.
+     */
     @Test
     void dotProduct() {
         assertTrue(isZero(v1.dotProduct(v3)), "ERROR: dotProduct() for orthogonal vectors is not zero");
@@ -65,16 +79,25 @@ class VectorTest {
 
     }
 
+    /**
+     * Test method for {@link Vector#lengthSquared()}.
+     */
     @Test
     void lengthSquared() {
         assertTrue(isZero(v1.lengthSquared() - 14), "ERROR: lengthSquared() wrong value");
     }
 
+    /**
+     * Test method for {@link Vector#length()}.
+     */
     @Test
     void length() {
         assertTrue(isZero(new Vector(0, 3, 4).length() - 5), "ERROR: length() wrong value");
     }
 
+    /**
+     * Test method for {@link Vector#normalize()}.
+     */
     @Test
     void normalize() {
         Vector u = v1.normalize();
