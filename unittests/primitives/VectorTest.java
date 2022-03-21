@@ -101,7 +101,7 @@ class VectorTest {
     @Test
     void normalize() {
         Vector u = v1.normalize();
-        assertTrue(!isZero(u.length() - 1), "ERROR: the normalized vector is not a unit vector");
+        assertTrue(isZero(u.length() - 1), "ERROR: the normalized vector is not a unit vector");
 
     }
 

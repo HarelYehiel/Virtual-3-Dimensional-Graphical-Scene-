@@ -22,7 +22,7 @@ class TubeTest {
         Point p = new Point(4,5,0);
         double d = 4;
         Point o = new Point((d * 1),0,0);
-        Vector normal = new Vector(0,5,0);
+        Vector normal = new Vector(0,1,0);
         assertEquals(t.getNormal(p),normal,"The method getNormal return wrong normal.");
     }
 }

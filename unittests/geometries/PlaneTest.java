@@ -27,8 +27,9 @@ class  PlaneTest {
      */
     @Test
     void getNormal() {
+        double denominator = Math.sqrt(1880);
         Plane p =  new Plane(new Point(2,7,1),new Point(1,12,3),new Point(3,6,9));
-        assertEquals(p.getNormal(), new Vector(42,10,-4).normalize(),
+        assertEquals(p.getNormal(), new Vector(42/denominator,10/denominator,-4/denominator),
                 "The method getNormal return wrong normal.");
     }
 }

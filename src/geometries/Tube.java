@@ -4,6 +4,8 @@ import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
 
+import java.util.List;
+
 /**
  * Tube with unlimited height tube represent by direction and radius
  */
@@ -61,4 +63,6 @@ public class Tube implements Geometry{
         Point o = axisRay.getP0().add(axisRay.getDir().scale(t));
         return  p.subtract(o).normalize();
     }
+
+    public List<Point> findIntsersections(Ray ray){return  null;}
 }

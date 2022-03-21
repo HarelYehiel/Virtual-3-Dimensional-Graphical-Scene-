@@ -6,7 +6,7 @@ import primitives.Vector;
 /**
  * interface for Geometry Shapes
  */
-public interface Geometry {
+public interface Geometry extends Intersectable{
 
     /**
      * @param p

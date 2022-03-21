@@ -17,7 +17,7 @@ public class Point {
     public Point(double x, double y, double z) {
         xyz = new Double3(x, y, z);
     }
-    public  Point(Double3 dbl) {xyz = new Double3(dbl.d1,dbl.d2,dbl.d2);}
+    public  Point(Double3 dbl) {xyz = new Double3(dbl.d1,dbl.d2,dbl.d3);}
 
     /**
      * equals between to points.

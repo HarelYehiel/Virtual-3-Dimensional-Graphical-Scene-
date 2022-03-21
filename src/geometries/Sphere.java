@@ -2,6 +2,8 @@ package geometries;
 
 import primitives.Point;
 import primitives.Vector;
+import primitives.Ray;
+import java.util.List;
 
 /**
  * Sphere = ball 3D Sphere represent by point and radius vector args:
@@ -51,7 +53,11 @@ public class Sphere implements Geometry {
      */
     @Override
     public Vector getNormal(Point p) {
-        return null;
+        return p.subtract(center).normalize();
     }
+
+    public List<Point> findIntsersections(Ray ray)  {
+        return null;
+    };
 
 }

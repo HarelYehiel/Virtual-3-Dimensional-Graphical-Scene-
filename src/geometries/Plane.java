@@ -3,6 +3,8 @@ package geometries;
 import primitives.Point;
 import primitives.Util;
 import primitives.Vector;
+import primitives.Ray;
+import java.util.List;
 
 /**
  *  Plane is infinite linear 3D surface The class represents Plane entity in our
@@ -49,13 +51,13 @@ public class Plane implements Geometry{
 
             Vector v0 = q0.subtract(q1);
             Vector v1 = q0.subtract(q2);
-            Vector v2 = v1.crossProduct(v0);
+            Vector v2 = v0.crossProduct(v1);
             if(Util.isZero(v2.lengthSquared()))
                 throw new IllegalArgumentException("All vertices of a Plane need not to be on the same line");
 
 
         this.q0 = q0;
-        normal = v0.crossProduct(v1).normalize();
+        normal = v2.normalize();
     }
 
     /**
@@ -77,5 +79,9 @@ public class Plane implements Geometry{
     @Override
     public Vector getNormal(Point p) {
         return normal;
+    }
+
+    public List<Point> findIntsersections(Ray ray) {
+        return null;
     }
 }
