@@ -128,8 +128,9 @@ class VectorTest {
 
         // TC01: Tests normalize    Vector.
         Vector u = v1.normalize();
+        double denomanator = Math.sqrt(14);
         assertTrue(isZero(u.length() - 1), "ERROR: the normalized vector is not a unit vector");
-
+        assertEquals(u,new Vector(1/denomanator,2/denomanator,3/denomanator),"ERROR: the method normalize giv wrong vector");
     }
 
 }
