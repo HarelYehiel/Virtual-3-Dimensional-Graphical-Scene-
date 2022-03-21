@@ -13,6 +13,9 @@ class TriangleTest {
      */
     @Test
     void getNormal() {
+        // ============ Equivalence Partitions Tests ==============
+
+        // TC01: Checks whether the returned normal is correct.
         Triangle t = new Triangle(new Point(2,7,1),new Point(1,12,3),new Point(3,6,9));
         assertEquals(t.getNormal(new Point(2, 7, 1)), new Vector(42,10,-4).normalize(),
                 "The method getNormal return wrong normal.");
