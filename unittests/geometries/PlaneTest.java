@@ -6,7 +6,7 @@ import primitives.Vector;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class PlaneTest {
+class  PlaneTest {
 
     /**
      * Test method for {@link Polygon#Polygon(Point...)}.

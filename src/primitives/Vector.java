@@ -37,15 +37,6 @@ public class Vector extends Point {
      */
     public Double3 getVector(){ return xyz;}
 
-    /**
-     * Equals between two points.
-     * @param o
-     * @return boolean
-     */
-    @Override
-    public boolean equals(Object o) {
-        return super.equals(o);
-    }
 
     /**
      * @return the details: xyz.
@@ -110,7 +101,9 @@ public class Vector extends Point {
      * @return scalar (double)
      */
     public double lengthSquared(){
-        return dotProduct(this);
+        return xyz.d1 * xyz.d1 +
+                xyz.d2 * xyz.d2 +
+                xyz.d3 * xyz.d3;
     }
 
     /**
