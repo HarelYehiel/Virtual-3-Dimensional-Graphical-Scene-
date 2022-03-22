@@ -18,6 +18,9 @@ class VectorTest {
      */
     @Test
     void add() {
+        // ============ Equivalence Partitions Tests ==============
+
+        // TC01: Tests add between a Vector and Vector.
         assertEquals(v1.add(new Vector(-1, -2, -3)), (new Point(0, 0, 0)),
                 "ERROR: Vector + Vector does not work correctly");
 
@@ -28,9 +31,12 @@ class VectorTest {
      */
     @Test
     void subtract() {
+        // ============ Equivalence Partitions Tests ==============
+
+        // TC01: Tests subtract between a Vector and Vector
         Vector v1 = new Vector(1, 2, 3);
         assertEquals(new Vector(1, 1, 1), (new Vector(2, 3, 4).subtract(v1))
-                ,"ERROR: Point - Point does not work correctly");
+                ,"ERROR: Vector - Vector does not work correctly");
     }
 
     /**
@@ -38,6 +44,9 @@ class VectorTest {
      */
     @Test
     void scale() {
+        // ============ Equivalence Partitions Tests ==============
+
+        // TC01: Tests scale between a Vector and double
         assertEquals(v1.scale(5), new Vector(5, 10, 15),
                 "ERROR: Vector * double does not work correctly");
     }
@@ -74,8 +83,15 @@ class VectorTest {
      */
     @Test
     void dotProduct() {
-        assertTrue(isZero(v1.dotProduct(v3)), "ERROR: dotProduct() for orthogonal vectors is not zero");
-        assertTrue(isZero(v1.dotProduct(v2) + 28), "ERROR: dotProduct() wrong value");
+        // ============ Equivalence Partitions Tests ==============
+
+        // TC01: Product of two vertical vectors should give 0.
+        assertTrue(isZero(v1.dotProduct(v3)),
+                "ERROR: dotProduct() for orthogonal vectors is not zero");
+
+        // TC02: Checks that multiplication gives a correct scalar.
+        assertTrue(isZero(v1.dotProduct(v2) + 28),
+                "ERROR: dotProduct() wrong value");
 
     }
 
@@ -84,6 +100,10 @@ class VectorTest {
      */
     @Test
     void lengthSquared() {
+
+        // ============ Equivalence Partitions Tests ==============
+
+        // TC01: Tests lengthSquared of a Vector.
         assertTrue(isZero(v1.lengthSquared() - 14), "ERROR: lengthSquared() wrong value");
     }
 
@@ -92,6 +112,10 @@ class VectorTest {
      */
     @Test
     void length() {
+
+        // ============ Equivalence Partitions Tests ==============
+
+        // TC01: Tests length of a Vector.
         assertTrue(isZero(new Vector(0, 3, 4).length() - 5), "ERROR: length() wrong value");
     }
 
@@ -100,6 +124,9 @@ class VectorTest {
      */
     @Test
     void normalize() {
+        // ============ Equivalence Partitions Tests ==============
+
+        // TC01: Tests normalize    Vector.
         Vector u = v1.normalize();
         double denomanator = Math.sqrt(14);
         assertTrue(isZero(u.length() - 1), "ERROR: the normalized vector is not a unit vector");

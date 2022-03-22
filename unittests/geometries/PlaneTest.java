@@ -13,10 +13,14 @@ class  PlaneTest {
      */
     @Test
     public void testConstructor() {
+        // ============ Equivalence Partitions Tests ==============
+
+        // TC01: Checks if the vertices are not equal
         assertThrows(IllegalArgumentException.class,
                 ()-> new Plane(new Point(1,2,3),new Point(1,2,3),new Point(3,6,9))
                 ,"Constructed a plane with vertices equals.");
 
+        // TC01: Checks if the vertices are on the same line.
         assertThrows(IllegalArgumentException.class,
                 ()-> new Plane(new Point(1,2,3),new Point(2,4,6),new Point(3,6,9))
                 ,"Constructed a plane with vertices on the same line.");
@@ -27,6 +31,9 @@ class  PlaneTest {
      */
     @Test
     void getNormal() {
+        // ============ Equivalence Partitions Tests ==============
+
+        // TC01: Checks whether the returned normal is correct.
         double denominator = Math.sqrt(1880);
         Plane p =  new Plane(new Point(2,7,1),new Point(1,12,3),new Point(3,6,9));
         assertEquals(p.getNormal(), new Vector(42/denominator,10/denominator,-4/denominator),

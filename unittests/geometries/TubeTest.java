@@ -16,6 +16,9 @@ class TubeTest {
      */
     @Test
     void getNormal() {
+        // ============ Equivalence Partitions Tests ==============
+
+        // TC01: Checks whether the returned normal is correct.
         Vector v = new Vector(1,0,0);
         Point p0 = new Point(0,0,0);
         Tube t = new Tube(new Ray(p0,v),5);

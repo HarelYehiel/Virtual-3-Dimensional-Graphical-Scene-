@@ -13,6 +13,9 @@ class SphereTest {
      */
     @Test
     void getNormal() {
+        // ============ Equivalence Partitions Tests ==============
+
+        // TC01: Checks whether the returned normal is correct.
         Sphere s = new Sphere(new Point(0,0,0),3);
          Point p = new Point(3,0,0);
         Vector normal   = p.subtract(s.getCenter()).normalize();
