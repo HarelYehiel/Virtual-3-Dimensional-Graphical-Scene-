@@ -98,7 +98,6 @@ public class PolygonTests {
 		assertEquals( null, pl.findIntersections(ray2),"Outside against edge");
 
 
-
 		// =============== Boundary Values Tests ==================
 		// *********Three cases (the ray begins "before" the polygon)*****
 
