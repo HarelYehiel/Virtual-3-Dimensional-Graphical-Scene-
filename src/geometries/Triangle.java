@@ -18,8 +18,11 @@ public class Triangle extends Polygon{
         super(q0,q1,q2);
     }
 
-    //public List<Point> findIntersections(Ray ray){return  null;}
-
+    /**
+     *
+     * @param ray
+     * @return list of intersection points between ray and triangle.
+     */
     @Override
     public List<Point> findIntersections(Ray ray) {
         List<Point> result = plane.findIntersections(ray);

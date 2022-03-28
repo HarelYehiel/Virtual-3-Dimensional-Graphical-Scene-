@@ -94,6 +94,11 @@ public class Polygon implements Geometry {
 		return plane.getNormal();
 	}
 
+	/**
+	 *
+	 * @param ray
+	 * @return list of intersection points between ray and polygon.
+	 */
 	public List<Point> findIntersections(Ray ray){
 		List<Point> result = plane.findIntersections(ray);
 		int verticesSize = vertices.size();

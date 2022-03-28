@@ -11,10 +11,18 @@ public class Geometries implements Intersectable{
 
     private List<Intersectable> geometries;
 
+    /**
+     * Initialization the list 'geometries'.
+     */
     public Geometries(){
         geometries = new LinkedList<>();
     }
 
+    /**
+     * Initialization the list 'this.geometries' with
+     * the value in array 'geometries'.
+     * @param geometries: list of geometries.
+     */
     public Geometries(Intersectable... geometries){
         this.geometries = new LinkedList<>();
 
@@ -24,6 +32,11 @@ public class Geometries implements Intersectable{
         }
     }
 
+    /**
+     * Add to list 'this.geometries'
+     * the value in array 'geometries'.
+     * @param geometries: list of geometries.
+     */
     public  void add(Intersectable... geometries){
         int geometriesLength = geometries.length;
         for (var i = 0; i < geometriesLength; ++i){
@@ -31,6 +44,12 @@ public class Geometries implements Intersectable{
         }
     }
 
+    /**
+     *
+     * @param ray
+     * @return the intersection points with the geometries
+     * in list 'this.geometries'.
+     */
     public List<Point> findIntersections(Ray ray){
 
         List<Point> pointIntersections = new LinkedList<>();

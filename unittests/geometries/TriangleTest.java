@@ -23,6 +23,9 @@ class TriangleTest {
                 "The method getNormal return wrong normal.");
     }
 
+    /**
+     * Test method for {@link geometries.Triangle#findIntersections(primitives.Ray)}.
+     */
     @Test
     public void testFindIntersections(){
         Triangle tria = new Triangle(new Point(0.0, 1.0, 0.0), new Point(1.0, 0.0, 0.0), new Point(0.0, 0.0, 1.0));
