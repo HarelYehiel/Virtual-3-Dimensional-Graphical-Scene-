@@ -23,8 +23,6 @@ class TubeTest {
         Point p0 = new Point(0,0,0);
         Tube t = new Tube(new Ray(p0,v),5);
         Point p = new Point(4,5,0);
-        double d = 4;
-        Point o = new Point((d * 1),0,0);
         Vector normal = new Vector(0,1,0);
         assertEquals(t.getNormal(p),normal,"The method getNormal return wrong normal.");
     }

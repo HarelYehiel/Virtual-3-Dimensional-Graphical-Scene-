@@ -64,5 +64,5 @@ public class Tube implements Geometry{
         return  p.subtract(o).normalize();
     }
 
-    public List<Point> findIntsersections(Ray ray){return  null;}
+    public List<Point> findIntersections(Ray ray){return  null;}
 }
