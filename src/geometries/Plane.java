@@ -84,7 +84,7 @@ public class Plane implements Geometry{
     /**
      *
      * @param ray
-     * @return list os intersection points between ray and plain
+     * @return list of intersection points between ray and plan.
      */
     public List<Point> findIntersections(Ray ray) {
         /*

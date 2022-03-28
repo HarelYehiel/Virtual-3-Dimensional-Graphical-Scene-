@@ -77,6 +77,9 @@ public class PolygonTests {
 		assertEquals(new Vector(sqrt3, sqrt3, sqrt3), pl.getNormal(new Point(0, 0, 1)), "Bad normal to trinagle");
 	}
 
+	/**
+	 * Test method for {@link geometries.Polygon#findIntersections(primitives.Ray)}.
+	 */
 	@Test
 	public void testFindIntersections() {
 		Polygon pl = new Polygon(new Point(0, 0, 0), new Point(0, 3, 0), new Point(2, 2, 0),
