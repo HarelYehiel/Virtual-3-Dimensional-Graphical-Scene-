@@ -4,8 +4,6 @@ import org.junit.jupiter.api.Test;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
-
-import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -26,9 +24,9 @@ class TriangleTest {
     }
 
     @Test
-    void findIntersections(Ray ray){
+    public void testFindIntersections(){
         Triangle tria = new Triangle(new Point(0.0, 1.0, 0.0), new Point(1.0, 0.0, 0.0), new Point(0.0, 0.0, 1.0));
-        List<Point> intersectionsPoints = new LinkedList<Point>();
+        List<Point> intersectionsPoints;
 
         // ============ Equivalence Partitions Tests ==============
 
@@ -67,7 +65,6 @@ class TriangleTest {
         assertNull(tria.findIntersections(new Ray(new Point(0.5,0.0,0.0),
                 new Vector(0.0,0.0,0.5))),
                 "There should be no point of intersection because the ray intersects the triangle on edge");
-
 
     }
 }

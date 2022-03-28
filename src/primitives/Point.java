@@ -19,6 +19,10 @@ public class Point {
     }
     public  Point(Double3 dbl) {xyz = new Double3(dbl.d1,dbl.d2,dbl.d3);}
 
+    public double getX(){return xyz.d1;}
+    public double getY(){return xyz.d2;}
+    public double getZ(){return xyz.d3;}
+
     /**
      * equals between to points.
      * @param o

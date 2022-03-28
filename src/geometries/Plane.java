@@ -1,7 +1,7 @@
 package geometries;
 
 import primitives.Point;
-import primitives.Util;
+import static primitives.Util.*;
 import primitives.Vector;
 import primitives.Ray;
 import java.util.List;
@@ -52,7 +52,7 @@ public class Plane implements Geometry{
             Vector v0 = q0.subtract(q1);
             Vector v1 = q0.subtract(q2);
             Vector v2 = v0.crossProduct(v1);
-            if(Util.isZero(v2.lengthSquared()))
+            if(isZero(v2.lengthSquared()))
                 throw new IllegalArgumentException("All vertices of a Plane need not to be on the same line");
 
 
@@ -81,7 +81,31 @@ public class Plane implements Geometry{
         return normal;
     }
 
-    public List<Point> findIntsersections(Ray ray) {
-        return null;
+    /**
+     *
+     * @param ray
+     * @return list os intersection points between ray and plain
+     */
+    public List<Point> findIntersections(Ray ray) {
+        /*
+        based on this
+        P0: begin point of ray
+        v: is vector of ray
+        Q: is point on plane
+        n: is normal of plane
+        Ray points: 𝑃=𝑃0+𝑡∙𝑣, 𝑡>0
+        Plane points: n∙(𝑄−𝑃)=0
+        𝑛∙(𝑄−𝑡∙𝑣−𝑃0)=0
+        𝑛∙(𝑄−𝑃0)−𝑡∙𝑛∙𝑣=0
+        𝑡=𝑛∙(𝑄−𝑃0)/𝑛∙𝑣
+         */
+        double nv = this.normal.dotProduct(ray.getDir());
+        if (isZero(nv))  // check if n and v are orthogonal n * u = 0
+            return null;
+        double nQMinusP0 = this.normal.dotProduct(this.q0.subtract(ray.getP0()));
+        double t = alignZero(nQMinusP0 / nv);
+        if (t <= 0)     //  check if ray is opposite direction of plane
+            return null;
+        return List.of(ray.getPoint(t));
     }
 }
