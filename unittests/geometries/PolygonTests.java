@@ -5,8 +5,7 @@ package geometries;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
-
-import geometries.*;
+import java.util.List;
 import primitives.*;
 
 /**
@@ -77,4 +76,48 @@ public class PolygonTests {
 		double sqrt3 = Math.sqrt(1d / 3);
 		assertEquals(new Vector(sqrt3, sqrt3, sqrt3), pl.getNormal(new Point(0, 0, 1)), "Bad normal to trinagle");
 	}
+
+	@Test
+	public void testFindIntersections() {
+		Polygon pl = new Polygon(new Point(0, 0, 0), new Point(0, 3, 0), new Point(2, 2, 0),
+				new Point(2, -1, 0));
+		// ============ Equivalence Partitions Tests ==============
+
+		// TC01: Inside polygon(1 Point)
+		Ray ray1 = new Ray(new Point(0, 0, -1), new Vector(1, 1, 1));
+		List<Point> resulet = pl.findIntersections(ray1);
+		Point p1 = new Point(1, 1, 0);
+		assertEquals( List.of(p1), resulet,"Inside polygon(1 Point)");
+
+		// TC02: Outside against vertex(0 Point)
+		Ray ray3 = new Ray(new Point(0, 0, -1), new Vector(-0.5, 4, 1));
+		assertEquals( null, pl.findIntersections(ray3),"Outside against vertex");
+
+		// TC03: Outside against edge(0 Point)
+		Ray ray2 = new Ray(new Point(0, 0, -1), new Vector(3, 1, 1));
+		assertEquals( null, pl.findIntersections(ray2),"Outside against edge");
+
+
+
+		// =============== Boundary Values Tests ==================
+		// *********Three cases (the ray begins "before" the polygon)*****
+
+		// TC04: On edge's continuation(0 Point)
+		Ray ray6 = new Ray(new Point(0, 0, -1), new Vector(0, 4, 1));
+		assertEquals( null, pl.findIntersections(ray6),"On edge's continuation");
+
+		// TC05: In vertex(0 Point)
+		Ray ray5 = new Ray(new Point(0, 0, -1), new Vector(0, 3, 1));
+		assertEquals( null, pl.findIntersections(ray5),"In vertex");
+
+		// TC06: On edge(0 Point)
+		Ray ray4 = new Ray(new Point(0, 0, -1), new Vector(2, 0, 1));
+		assertEquals( null, pl.findIntersections(ray4),"On edge");
+
+
+
+
+
+	}
+
 }
