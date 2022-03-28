@@ -33,7 +33,7 @@ class GeometriesTest {
 
         // TC03: Ray intersects all the geometries.
         assertEquals(geometries.findIntersections(new Ray(new Point(-1,0,0.5d),
-                new Vector(0.90104,0.67176,0))).size(), 5, "Wrong number of points");
+                new Vector(1.69, 0.54, -0.48))).size(), 5, "Wrong number of points");
 
         // TC04: Ray intersects the one geometry (have 4 geometries in scene).
         geometries.add(new Sphere( new Point (-3, 0, 0),1d));
@@ -44,7 +44,7 @@ class GeometriesTest {
 
         // TC05: Ray intersects part of geometries.
         assertEquals(geometries.findIntersections(new Ray(new Point(-1,0,0.5),
-                new Vector(0.90104,0.67176,0))).size(), 5, "Wrong number of points");
+                new Vector(1.69, 0.54, -0.48))).size(), 5, "Wrong number of points");
     }
 
 

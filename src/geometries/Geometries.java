@@ -41,7 +41,7 @@ public class Geometries implements Intersectable{
             pointIntersections.addAll(help);
         }
 
-        if(pointIntersections.size() == 0 || pointIntersections == null)
+        if(pointIntersections.size() == 0)
             return null;
 
         return pointIntersections;
