@@ -12,7 +12,10 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class ViewPlaneIntersactionRaysTest {
+/**
+ * Testing camera with geometry.
+ */
+class ViewPlaneIntersectionRaysTest {
     int intersectionCounter(Intersectable geometry, Camera camera) {
         int count = 0;
 
@@ -27,6 +30,9 @@ class ViewPlaneIntersactionRaysTest {
         return count;
     }
 
+    /**
+     * Test for constructRay between camera and geometry.
+     */
     @Test
     void constructRay() {
         Camera camera = new Camera(new Point(0, 0, 0),

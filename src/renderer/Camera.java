@@ -5,13 +5,13 @@ import primitives.Ray;
 
 
 public class Camera {
-    private Point p0;
-    private Vector vTo;
-    private Vector vUp;
-    private Vector vRight;
-    private double distanceFromVP;
-    private double heightVP;
-    private double widthVP;
+    private Point p0; // Point of camera's center.
+    private Vector vTo; // vector of axis Z.
+    private Vector vUp; // vector of axis Y.
+    private Vector vRight; // vector of axis X.
+    private double distanceFromVP; // distance from View Plane.
+    private double heightVP; // height View Plane.
+    private double widthVP; // width View Plane.
 
     /**
      * get the distance from camera to the view plane.
@@ -80,6 +80,14 @@ public class Camera {
         return this;
     }
 
+    /**
+     * Make ray from camera's center to pixel.
+     * @param nX sum of columns (row width).
+     * @param nY sum of rows (column height).
+     * @param j column of pixel.
+     * @param i row of pixel.
+     * @return Ray
+     */
     public Ray constructRay(int nX, int nY, int j, int i){
         Point pc = p0.add(vTo.scale(distanceFromVP));
         double rY = heightVP/nY;
