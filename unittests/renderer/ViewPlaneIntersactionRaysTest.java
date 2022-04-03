@@ -16,20 +16,15 @@ class ViewPlaneIntersactionRaysTest {
     int intersectionCounter(Intersectable geometry, Camera camera) {
         int count = 0;
 
-        for (int i = 0; i < 3; ++i) {
-            for (int j = 0; j < 3; ++j) {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
                 List<Point> l = geometry.findIntersections(camera.constructRay(3, 3, j, i));
 
                 if (l != null)
                     count += l.size();
             }
         }
-
         return count;
-    }
-
-    void triangleTest() {
-
     }
 
     @Test

@@ -92,8 +92,9 @@ public class Camera {
             pIJ = pIJ.add(vRight.scale(xJ));
         if(yI != 0)
             pIJ = pIJ.add(vUp.scale(-yI));
+        Vector vIJ = pIJ.subtract(p0);
 
-        return new Ray(p0, new Vector(pIJ.getX(), pIJ.getY(), pIJ.getZ()));
+        return new Ray(p0, new Vector(vIJ.getX(), vIJ.getY(), vIJ.getZ()));
     }
 
 
