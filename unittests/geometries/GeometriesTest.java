@@ -27,27 +27,30 @@ class GeometriesTest {
 
         // TC01: Ray not intersects the zero geometries.
         assertNull(geometries.findIntersections(new Ray(new Point(1,2,3),
-                new Vector(6,6,6))), "TC01:Wrong number of points");
+                new Vector(6,6,6))), "TC01: Number of intersections must be zero.");
 
         // TC02: Ray not intersects the any geometries (have 4 geometries in scene).
         geometries.add(triangle,sphere,plane,polygon);
         assertNull(geometries.findIntersections(new Ray(new Point(-1,-1,-1),
-                new Vector(-2,-4,-8))), "TC02: Wrong number of points");
+                new Vector(-2,-4,-8))), "TC02: Number of intersections must be zero.");
 
         // TC03: Ray intersects all the geometries.
         assertEquals(geometries.findIntersections(new Ray(new Point(-1,0,0.5d),
-                new Vector(1.69, 0.54, -0.48))).size(), 5, "TC03: Wrong number of points");
+                new Vector(1.69, 0.54, -0.48))).size(), 5,
+                "TC03: Number of intersections must be 5.");
 
         // TC04: Ray intersects the one geometry (have 4 geometries in scene).
         geometries.add(new Sphere( new Point (-3, 0, 0),1d));
         assertEquals(geometries.findIntersections(new Ray(new Point(-1,0,0),
-                new Vector(-4,-1,0))).size(), 2, "TC04: Wrong number of points");
+                new Vector(-4,-1,0))).size(), 2,
+                "TC04: Number of intersections must be 2");
 
         // ============ Equivalence Partitions Tests ==============
 
         // TC05: Ray intersects part of geometries.
         assertEquals(geometries.findIntersections(new Ray(new Point(-1,0,0.5),
-                new Vector(1.69, 0.54, -0.48))).size(), 5, "TC05: Wrong number of points");
+                new Vector(1.69, 0.54, -0.48))).size(), 5,
+                "TC05: Number of intersections must be 5");
     }
 
 
