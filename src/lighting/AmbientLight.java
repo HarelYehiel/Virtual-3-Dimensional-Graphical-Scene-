@@ -3,10 +3,10 @@ package lighting;
 import primitives.*;
 
 public class AmbientLight {
-        Color intensity;
+       private Color intensity;
 
     void AmbientLight(Color color, Double3 double3){
-//        intensity  = ?? ;
+            intensity  = color.scale(double3);
     }
 
     void AmbientLight(){

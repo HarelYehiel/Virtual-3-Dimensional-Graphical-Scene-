@@ -12,28 +12,31 @@ public class Scene {
     public AmbientLight ambientLight;
     public Geometries geometries;
 
-    void Scene(String name1) {
+    public Scene(String name1) {
         name = name1;
         background = new Color(0,0,0);
-
-//         ????????????
-        List<Geometries> geometries1 = new LinkedList<>();
-
-
-
         ambientLight = new AmbientLight();
         geometries = new Geometries();
     }
 
-    void Scane(){
-
-    }
-
-    Scene Builder(){
-
+    public Scene setBackground(Color background) {
+        this.background = background;
 
         return this;
     }
 
+    public Scene setAmbientLight(AmbientLight ambientLight) {
+        this.ambientLight = ambientLight;
+
+        return this;
+
+    }
+
+    public Scene setGeometries(Geometries geometries) {
+        this.geometries = geometries;
+
+        return this;
+
+    }
 
 }
