@@ -1,9 +1,6 @@
 package renderer;
 
-import primitives.Color;
-import primitives.Point;
-import primitives.Vector;
-import primitives.Ray;
+import primitives.*;
 
 import java.util.MissingResourceException;
 
@@ -19,11 +16,77 @@ public class Camera {
     private ImageWriter imageWriter;
     private RayTracerBase rayTracerBase;
 
+    /**
+     * constructor with point p0 and vectors up and down.
+     *
+     * @param p   the point = point p0.
+     * @param vTo Vector of camera.
+     * @param vUp Vector of camera.
+     */
+    public Camera(Point p, Vector vTo, Vector vUp) {
+        this.p0 = p;
+
+        // check if the vTo vUp
+        if (vUp.dotProduct(vTo) != 0)
+            throw new IllegalArgumentException("The vectors vTo and vUp must be orthogonal.");
+
+        this.vTo = vTo.normalize();
+        this.vUp = vUp.normalize();
+        this.vRight = vTo.crossProduct(vUp).normalize();
+
+    }
+
+    /**
+     * Print grid on the image.
+     * @param interval from pixel to pixel.
+     * @param color of the grid.
+     */
+    public void  printGrid(int interval, Color color){
+        if(imageWriter == null)
+            throw new MissingResourceException("Don't exist image", "Camera"
+                    ,"Initialize 'imageWriter' with function 'setImageWriter'.");
+
+        int nX = imageWriter.getNx();
+        int nY = imageWriter.getNy();
+
+        for (int i = 0; i < nX; ++i)
+            for (int j = 0; j < nY; ++j) {
+                if (i % interval == 0 || j % interval == 0)
+                    imageWriter.writePixel(i, j, color);
+            }
+
+        imageWriter.writeToImage();
+    }
+
+    /**
+     * active the writeToImage of the imageWriter <br>
+     * (we need that for keep know only your near friend)
+     */
+    public  void writeToImage(){
+        if(imageWriter == null)
+            throw new MissingResourceException("Don't exist image", "Camera"
+                    ,"Initialize 'imageWriter' with function 'setImageWriter'.");
+
+        imageWriter.writeToImage();
+    }
+
+    /**
+     * setter for ImageWriter
+     *
+     * @param imageWriter for change in the Render
+     * @return this (Render)
+     */
     public Camera setImageWriter(ImageWriter imageWriter) {
         this.imageWriter = imageWriter;
         return this;
     }
 
+    /**
+     * setter for RayTracerBasic
+     *
+     * @param rayTracerBase for change in the Render
+     * @return this (Render)
+     */
     public Camera setRayTracerBase(RayTracerBase rayTracerBase) {
         this.rayTracerBase = rayTracerBase;
         return this;
@@ -57,36 +120,39 @@ public class Camera {
     }
 
     /**
-     * constructor with point p0 and vectors up and down.
-     *
-     * @param p   the point = point p0.
-     * @param vTo Vector of camera.
-     * @param vUp Vector of camera.
+     * void method for active the writePixel() <br>
+     * given for each pixel is color
      */
-    public Camera(Point p, Vector vTo, Vector vUp) {
-        this.p0 = p;
-
-        // check if the vTo vUp
-        if (vUp.dotProduct(vTo) != 0)
-            throw new IllegalArgumentException("The vectors vTo and vUp must be orthogonal.");
-
-        this.vTo = vTo.normalize();
-        this.vUp = vUp.normalize();
-        this.vRight = vTo.crossProduct(vUp).normalize();
-
-    }
-
     public void renderImage() {
         if (p0 == null || vTo == null || vUp == null || vRight == null || distanceFromVP == 0 ||
                 heightVP == 0 || widthVP == 0 || imageWriter == null || rayTracerBase == null)
             throw new MissingResourceException("Not all parameters are initialized", "", "");
 
+        int nX = imageWriter.getNx();
+        int nY = imageWriter.getNy();
+
+        for (int i = 0; i < nX; ++i)
+            for (int j = 0; j < nY; ++j) {
+                 imageWriter.writePixel(i, j, castRay(i, j));
+            }
+
+        imageWriter.writeToImage();
+
         throw new UnsupportedOperationException();
     }
 
-    public void printGrid(int interval, Color color){
-
+    /**
+     * Make ray through the pixel (i,j)
+     * and return the calculator color in the closest point intersection.
+     * @param i of the pixel.
+     * @param j of the pixel.
+     * @return Color.
+     */
+    public Color castRay(int i, int j){
+        Ray ray = constructRay(100, 100, j, i);
+        return rayTracerBase.traceRay(ray);
     }
+
     /**
      * set width and height of view plane
      *
