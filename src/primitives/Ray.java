@@ -1,6 +1,7 @@
 package primitives;
 
 import java.util.Objects;
+import java.util.List;
 
 /**
  * (ray) - A fundamental object in geometry - the group of points on a straight
@@ -14,28 +15,36 @@ public class Ray {
 
     /**
      * Constructor that initialize the p0 and dir.
+     *
      * @param p
      * @param v
      */
-    public Ray(Point p,Vector v){
+    public Ray(Point p, Vector v) {
         p0 = p;
         dir = v.normalize();
     }
 
     /**
      * Get the value in p0.
+     *
      * @return Point
      */
-    public Point getP0(){ return p0; }
+    public Point getP0() {
+        return p0;
+    }
 
     /**
      * Get the value in dir.
+     *
      * @return Vector
      */
-    public Vector getDir(){ return dir;}
+    public Vector getDir() {
+        return dir;
+    }
 
     /**
      * Equals between two Rays.
+     *
      * @param o
      * @return boolean
      */
@@ -58,7 +67,25 @@ public class Ray {
                 '}';
     }
 
-    public Point getPoint(double t){
+    public Point getPoint(double t) {
         return this.p0.add(this.dir.scale(t));
+    }
+
+    public Point findClosestPoint(List<Point> listPoints) {
+        if (listPoints == null) return null;
+
+        double minDistance = p0.distance(listPoints.get(0));
+        Point pointRes = listPoints.get(0);
+
+        for (int i = 1; i < listPoints.size(); ++i) {
+            double distance = p0.distance(listPoints.get(i));
+
+            if (distance < minDistance) {
+                minDistance = distance;
+                pointRes = listPoints.get(i);
+            }
+        }
+
+        return pointRes;
     }
 }

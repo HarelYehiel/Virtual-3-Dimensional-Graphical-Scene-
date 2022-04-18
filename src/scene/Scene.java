@@ -12,28 +12,50 @@ public class Scene {
     public AmbientLight ambientLight;
     public Geometries geometries;
 
-    void Scene(String name1) {
+    /**
+     * Constructor with name.
+     * @param name1 of scene.
+     */
+    public Scene(String name1) {
         name = name1;
         background = new Color(0,0,0);
-
-//         ????????????
-        List<Geometries> geometries1 = new LinkedList<>();
-
-
-
         ambientLight = new AmbientLight();
         geometries = new Geometries();
     }
 
-    void Scane(){
-
-    }
-
-    Scene Builder(){
-
+    /**
+     * Set background.
+     * @param background for initialize.
+     * @return Scene.
+     */
+    public Scene setBackground(Color background) {
+        this.background = background;
 
         return this;
     }
 
+    /**
+     * Set ambientLight
+     * @param ambientLight for initialize.
+     * @return Scene.
+     */
+    public Scene setAmbientLight(AmbientLight ambientLight) {
+        this.ambientLight = ambientLight;
+
+        return this;
+
+    }
+
+    /**
+     * Set geometries.
+     * @param geometries for initialize.
+     * @return Scene.
+     */
+    public Scene setGeometries(Geometries geometries) {
+        this.geometries = geometries;
+
+        return this;
+
+    }
 
 }
