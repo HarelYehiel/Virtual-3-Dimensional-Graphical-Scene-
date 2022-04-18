@@ -37,37 +37,29 @@ public class Camera {
     }
 
     /**
-     * Print grid on the image.
-     * @param interval from pixel to pixel.
-     * @param color of the grid.
+     * set width and height of view plane
+     *
+     * @param width  of view plane
+     * @param height of view plane
+     * @return
      */
-    public void  printGrid(int interval, Color color){
-        if(imageWriter == null)
-            throw new MissingResourceException("Don't exist image", "Camera"
-                    ,"Initialize 'imageWriter' with function 'setImageWriter'.");
+    public Camera setVPSize(double width, double height) {
+        this.widthVP = width;
+        this.heightVP = height;
 
-        int nX = imageWriter.getNx();
-        int nY = imageWriter.getNy();
-
-        for (int i = 0; i < nX; ++i)
-            for (int j = 0; j < nY; ++j) {
-                if (i % interval == 0 || j % interval == 0)
-                    imageWriter.writePixel(i, j, color);
-            }
-
-        imageWriter.writeToImage();
+        return this;
     }
 
     /**
-     * active the writeToImage of the imageWriter <br>
-     * (we need that for keep know only your near friend)
+     * set the distance from camera to the view plane.
+     *
+     * @param distance from camera to the view plane.
+     * @return Camera
      */
-    public  void writeToImage(){
-        if(imageWriter == null)
-            throw new MissingResourceException("Don't exist image", "Camera"
-                    ,"Initialize 'imageWriter' with function 'setImageWriter'.");
+    public Camera setVPDistance(double distance) {
+        distanceFromVP = distance;
 
-        imageWriter.writeToImage();
+        return this;
     }
 
     /**
@@ -133,12 +125,11 @@ public class Camera {
 
         for (int i = 0; i < nX; ++i)
             for (int j = 0; j < nY; ++j) {
-                 imageWriter.writePixel(i, j, castRay(i, j));
+                 imageWriter.writePixel(j, i, castRay(i, j));
             }
 
-        imageWriter.writeToImage();
+        writeToImage();
 
-        throw new UnsupportedOperationException();
     }
 
     /**
@@ -149,34 +140,42 @@ public class Camera {
      * @return Color.
      */
     public Color castRay(int i, int j){
-        Ray ray = constructRay(100, 100, j, i);
+        Ray ray = constructRay(imageWriter.getNx(), imageWriter.getNy(), j, i);
         return rayTracerBase.traceRay(ray);
     }
 
     /**
-     * set width and height of view plane
-     *
-     * @param width  of view plane
-     * @param height of view plane
-     * @return
+     * Print grid on the image.
+     * @param interval from pixel to pixel.
+     * @param color of the grid.
      */
-    public Camera setVPSize(double width, double height) {
-        this.widthVP = width;
-        this.heightVP = height;
+    public void  printGrid(int interval, Color color){
+        if(imageWriter == null)
+            throw new MissingResourceException("Don't exist image", "Camera"
+                    ,"Initialize 'imageWriter' with function 'setImageWriter'.");
 
-        return this;
+        int nX = imageWriter.getNx();
+        int nY = imageWriter.getNy();
+
+        for (int i = 0; i < nX; ++i)
+            for (int j = 0; j < nY; ++j) {
+                if (i % interval == 0 || j % interval == 0)
+                    imageWriter.writePixel(i, j, color);
+            }
+
+        writeToImage();
     }
 
     /**
-     * set the distance from camera to the view plane.
-     *
-     * @param distance from camera to the view plane.
-     * @return Camera
+     * active the writeToImage of the imageWriter <br>
+     * (we need that for keep know only your near friend)
      */
-    public Camera setVPDistance(double distance) {
-        distanceFromVP = distance;
+    public  void writeToImage(){
+        if(imageWriter == null)
+            throw new MissingResourceException("Don't exist image", "Camera"
+                    ,"Initialize 'imageWriter' with function 'setImageWriter'.");
 
-        return this;
+        imageWriter.writeToImage();
     }
 
     /**
@@ -190,6 +189,11 @@ public class Camera {
      */
     public Ray constructRay(int nX, int nY, int j, int i) {
         Point pc = p0.add(vTo.scale(distanceFromVP));
+
+        if (!Util.isZero(distanceFromVP)) {
+            pc = p0.add(vTo.scale(distanceFromVP));
+        }
+
         double rY = heightVP / nY;
         double rX = widthVP / nX;
         double yI = (i - (double) (nY - 1) / 2) * rY;

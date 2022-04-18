@@ -14,6 +14,8 @@ public class AmbientLight {
             intensity  = color.scale(double3);
     }
 
+
+
     /**
      * Constructor with initialize the intensity with black color.
      */
