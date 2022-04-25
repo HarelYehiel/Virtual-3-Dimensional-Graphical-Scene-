@@ -11,7 +11,7 @@ import java.util.List;
  * Sphere = ball 3D Sphere represent by point and radius vector args:
  * center ,radius
  */
-public class Sphere implements Geometry {
+public class Sphere extends Geometry {
 
     private Point center;
     private double radius;
@@ -63,6 +63,7 @@ public class Sphere implements Geometry {
      * @param ray
      * @return list os intersection points between ray and sphere
      */
+    @Override
     public List<Point> findIntersections(Ray ray)  {
         /*
         Based on this:

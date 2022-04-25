@@ -10,7 +10,7 @@ import java.util.List;
  *  Plane is infinite linear 3D surface The class represents Plane entity in our
  *  3D model
  */
-public class Plane implements Geometry{
+public class Plane extends Geometry{
 
     private Point q0;
     private Vector normal;
@@ -86,6 +86,7 @@ public class Plane implements Geometry{
      * @param ray
      * @return list of intersection points between ray and plan.
      */
+    @Override
     public List<Point> findIntersections(Ray ray) {
         /*
         based on this

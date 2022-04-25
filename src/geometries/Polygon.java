@@ -11,7 +11,7 @@ import static primitives.Util.*;
  *
  * @author Dan
  */
-public class Polygon implements Geometry {
+public class Polygon extends Geometry {
 	/**
 	 * List of polygon's vertices
 	 */
@@ -99,6 +99,7 @@ public class Polygon implements Geometry {
 	 * @param ray
 	 * @return list of intersection points between ray and polygon.
 	 */
+	@Override
 	public List<Point> findIntersections(Ray ray){
 		List<Point> result = plane.findIntersections(ray);
 		int verticesSize = vertices.size();

@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Tube with unlimited height tube represent by direction and radius
  */
-public class Tube implements Geometry{
+public class Tube extends Geometry{
 
     protected Ray axisRay;
     protected  double radius;
@@ -64,5 +64,6 @@ public class Tube implements Geometry{
         return  p.subtract(o).normalize();
     }
 
+    @Override
     public List<Point> findIntersections(Ray ray){return  null;}
 }

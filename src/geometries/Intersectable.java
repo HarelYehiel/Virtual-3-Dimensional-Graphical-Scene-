@@ -8,11 +8,22 @@ import java.util.List;
  * interface for Geometry Shapes
  */
 
-public interface Intersectable {
+public abstract class Intersectable {
+
+    /**
+     * The  point on geometry
+     */
+    public static class GeoPoint {
+        //The geometry that contain the follow point
+        public  Geometry geometry;
+        //The  point on geometry
+        public  Point point;
+    }
+
     /**
      *
      * @param ray
      * @return list of intersection points between ray and geometry.
      */
-    public List<Point> findIntersections(Ray ray);
+    public abstract List<Point> findIntersections(Ray ray);
 }
