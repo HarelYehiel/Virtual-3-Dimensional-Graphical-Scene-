@@ -1,7 +1,6 @@
 package primitives;
-
-import java.util.Objects;
 import java.util.List;
+import geometries.Intersectable.GeoPoint;
 
 /**
  * (ray) - A fundamental object in geometry - the group of points on a straight
@@ -71,6 +70,11 @@ public class Ray {
         return this.p0.add(this.dir.scale(t));
     }
 
+    /**
+     * Find the closest point from to thr center of camera.
+     * @param listPoints
+     * @return Point
+     */
     public Point findClosestPoint(List<Point> listPoints) {
         if (listPoints == null) return null;
 
@@ -83,6 +87,30 @@ public class Ray {
             if (distance < minDistance) {
                 minDistance = distance;
                 pointRes = listPoints.get(i);
+            }
+        }
+
+        return pointRes;
+    }
+
+    /**
+     * Find the closest geoPoint from to thr center of camera.
+     * @param listGeoPoints
+     * @return GeoPoint
+     */
+    public GeoPoint findClosestGeoPoint(List<GeoPoint> listGeoPoints){
+        if (listGeoPoints == null) return null;
+
+        double minDistance = p0.distance(listGeoPoints.get(0).point);
+        GeoPoint pointRes = listGeoPoints.get(0);
+
+        int len = listGeoPoints.size();
+        for (int i = 1; i < len; ++i) {
+            double distance = p0.distance(listGeoPoints.get(i).point);
+
+            if (distance < minDistance) {
+                minDistance = distance;
+                pointRes = listGeoPoints.get(i);
             }
         }
 

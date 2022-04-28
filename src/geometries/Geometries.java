@@ -67,4 +67,25 @@ public class Geometries extends Intersectable{
         return pointIntersections;
     }
 
+    /**
+     *
+     * @param ray
+     * @return the intersection GeoPoints with the geometries.
+     * in list 'this.geometries'.
+     */
+    @Override
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+        List<GeoPoint> pointIntersections = new LinkedList<>();
+        int sizeOfGeometries = geometries.size();
+        for (int i = 0; i < sizeOfGeometries; ++i){
+            List<GeoPoint> help = geometries.get(i).findGeoIntersections(ray);
+            if(help != null)
+                pointIntersections.addAll(help);
+        }
+
+        if(pointIntersections.size() == 0)
+            return null;
+
+        return pointIntersections;
+    }
 }

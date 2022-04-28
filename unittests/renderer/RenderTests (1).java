@@ -55,7 +55,7 @@ class RenderTests {
 				.setAmbientLight(new AmbientLight(new Color(WHITE), new Double3(0.2))); //
 
 		scene.geometries.add( //
-				new Sphere(new Point(0, 0, -100), 50),
+				new Sphere(new Point(0, 0, -100), 50).setEmission(new Color(GRAY)),
 				// up left
 				new Triangle(new Point(-100, 0, -100), new Point(0, 100, -100), new Point(-100, 100, -100))
 						.setEmission(new Color(GREEN)),
@@ -70,7 +70,7 @@ class RenderTests {
 				.setVPDistance(100) //
 				.setVPSize(500, 500) //
 				.setImageWriter(new ImageWriter("color render test", 1000, 1000))
-				.setRayTracer(new RayTracerBasic(scene));
+				.setRayTracerBase(new RayTracerBasic(scene));
 
 		camera.renderImage();
 		camera.printGrid(100, new Color(WHITE));

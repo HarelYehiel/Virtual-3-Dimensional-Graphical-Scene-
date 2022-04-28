@@ -24,7 +24,7 @@ public class Point {
     public double getZ(){return xyz.d3;}
 
     /**
-     * equals between to points.
+     * equals between two points.
      * @param o
      * @return
      */

@@ -18,6 +18,44 @@ public abstract class Intersectable {
         public  Geometry geometry;
         //The  point on geometry
         public  Point point;
+
+        /**
+         * Constructor with initialize of the geometry and point.
+         * @param geo
+         * @param poi
+         */
+        public GeoPoint(Geometry geo, Point poi) {
+            geometry = geo;
+            point = poi;
+        }
+
+        /**
+         * equals between two geoPoints.
+         * @param o
+         * @return true if the points and geometries are equals.
+         */
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            GeoPoint geoPoint = (GeoPoint) o;
+
+            if(geoPoint.geometry.getClass() != geometry.getClass()) return false;
+            //if           מה עושים עם זה.
+            //for ()
+            return point.equals(geoPoint.point);
+        }
+
+        /**
+         *
+         * @return
+         */
+        @Override
+        public String toString() {
+            return "geometry=" + geometry +
+                    ", point=" + point.toString() +
+                    '}';
+        }
     }
 
     /**
@@ -26,4 +64,10 @@ public abstract class Intersectable {
      * @return list of intersection points between ray and geometry.
      */
     public abstract List<Point> findIntersections(Ray ray);
+
+    public List<GeoPoint> findGeoIntersections(Ray ray){
+       return findGeoIntersectionsHelper(ray);
+    }
+
+    protected abstract List<GeoPoint> findGeoIntersectionsHelper(Ray ray);
 }

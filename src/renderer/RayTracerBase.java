@@ -1,6 +1,6 @@
 package renderer;
 
-import primitives.Ray;
+import primitives.*;
 import scene.Scene;
 
 public abstract class RayTracerBase {
@@ -15,5 +15,4 @@ public abstract class RayTracerBase {
     }
 
     public abstract Color traceRay(Ray ray);
-
 }
