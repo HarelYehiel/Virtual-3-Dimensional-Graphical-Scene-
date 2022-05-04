@@ -72,26 +72,37 @@ public class Ray {
 
     /**
      * Find the closest point from to thr center of camera.
-     * @param listPoints
+     * @param //listPoints
      * @return Point
      */
-    public Point findClosestPoint(List<Point> listPoints) {
-        if (listPoints == null) return null;
+//    public Point findClosestPoint(List<Point> listPoints) {
+//        if (listPoints == null) return null;
+//
+//        double minDistance = p0.distance(listPoints.get(0));
+//        Point pointRes = listPoints.get(0);
+//
+//        for (int i = 1; i < listPoints.size(); ++i) {
+//            double distance = p0.distance(listPoints.get(i));
+//
+//            if (distance < minDistance) {
+//                minDistance = distance;
+//                pointRes = listPoints.get(i);
+//            }
+//        }
+//
+//        return pointRes;
+//    }
 
-        double minDistance = p0.distance(listPoints.get(0));
-        Point pointRes = listPoints.get(0);
-
-        for (int i = 1; i < listPoints.size(); ++i) {
-            double distance = p0.distance(listPoints.get(i));
-
-            if (distance < minDistance) {
-                minDistance = distance;
-                pointRes = listPoints.get(i);
-            }
-        }
-
-        return pointRes;
+    /**
+     * Find the closest point from to thr center of camera.
+     * @param points
+     * @return Point
+     */
+    public Point findClosestPoint(List<Point> points) {
+        return points == null || points.isEmpty() ? null
+                : findClosestGeoPoint(points.stream().map(p -> new GeoPoint(null, p)).toList()).point;
     }
+
 
     /**
      * Find the closest geoPoint from to thr center of camera.

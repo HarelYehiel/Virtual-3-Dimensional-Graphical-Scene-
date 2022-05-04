@@ -1,15 +1,31 @@
 package geometries;
 
-import primitives.Color;
-import primitives.Point;
-import primitives.Vector;
+import primitives.*;
 
 /**
  * interface for Geometry Shapes
  */
 public abstract class Geometry extends Intersectable{
-
+    private Material material = new Material();
     protected Color emission = Color.BLACK;
+
+    /**
+     * Get material.
+     * @return Material
+     */
+    public Material getMaterial() {
+        return material;
+    }
+
+    /**
+     * Set material.
+     * @param material
+     * @return Material.
+     */
+    public Geometry setMaterial(Material material) {
+        this.material = material;
+        return this;
+    }
 
     /**
      * @param p
