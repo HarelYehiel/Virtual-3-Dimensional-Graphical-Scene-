@@ -7,6 +7,7 @@ import geometries.*;
 import primitives.*;
 import scene.Scene;
 import static java.awt.Color.*;
+import java.util.List;
 
 /**
  * Test rendering a basic image
@@ -162,4 +163,50 @@ public class LightsTests {
 				.writeToImage(); //
 	}
 
+
+	/**
+	 * Produce a picture of a sphere lighted by a multiple lights
+	 */
+	@Test
+	public void sphereMultiLights() {
+
+		scene1.geometries.add(new Sphere(new Point(0, 0, 50), 50)
+				.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100))
+				.setEmission(new Color(java.awt.Color.BLUE)));
+
+		scene1.lights.addAll(List.of(
+				new SpotLight(new Color(200, 300, 0), new Point(-100, 20, -50), new Vector(1, -1, 1)).setkC(1.2)
+						.setKl(0.00001).setKq(0.00000001),
+				new DirectionalLight(new Color(0, 400, 300), new Vector(-1, 1, 1)),
+				new PointLight(new Color(500, 50, 100), new Point(100, 100, -50)).setkC(1).setKl(0.0001)
+						.setKq(0.0000001)));
+
+		ImageWriter imageWriter = new ImageWriter("sphereMultiLights", 500, 500);
+
+		camera1.setImageWriter(imageWriter) //
+				.setRayTracerBase(new RayTracerBasic(scene1)) //
+				.renderImage() //
+				.writeToImage(); //
+	}
+
+	/**
+	 * Produce a picture of a two triangles lighted by a multiple lights
+	 */
+	@Test
+	public void triangleMultiLights() {
+
+		scene2.geometries.add(triangle1, triangle2);
+		scene2.lights.addAll(List.of(
+				new SpotLight(new Color(700, 20, 50), new Point(10, -10, -130), new Vector(-2, -2, -1)).setKl(0.0001)
+						.setKq(0.000005),
+				new PointLight(new Color(0, 0, 300), new Point(10, -10, -130)).setKl(0.0005).setKq(0.0002),
+				new DirectionalLight(new Color(5, 100, 5), new Vector(0, 0, -1))));
+
+		ImageWriter imageWriter = new ImageWriter("triangleMultiLights", 500, 500);
+
+		camera2.setImageWriter(imageWriter) //
+				.setRayTracerBase(new RayTracerBasic(scene2)) //
+				.renderImage() //
+				.writeToImage(); //
+	}
 }
