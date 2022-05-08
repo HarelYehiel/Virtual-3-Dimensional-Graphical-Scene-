@@ -12,6 +12,8 @@ public class Scene {
     public AmbientLight ambientLight;
     public Geometries geometries;
 
+    public List<LightSource> lights = new LinkedList<>();
+
     /**
      * Constructor with name.
      * @param name1 of scene.
@@ -21,6 +23,14 @@ public class Scene {
         background = new Color(0,0,0);
         ambientLight = new AmbientLight();
         geometries = new Geometries();
+    }
+
+    /**
+     *
+     * @param lights
+     */
+    public void setLights(List<LightSource> lights) {
+        this.lights = lights;
     }
 
     /**
@@ -57,5 +67,6 @@ public class Scene {
         return this;
 
     }
+
 
 }

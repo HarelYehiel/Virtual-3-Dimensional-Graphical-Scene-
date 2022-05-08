@@ -1,6 +1,7 @@
 package renderer;
 
 import primitives.*;
+import scene.Scene;
 
 import java.util.MissingResourceException;
 
@@ -115,7 +116,7 @@ public class Camera {
      * void method for active the writePixel() <br>
      * given for each pixel is color
      */
-    public void renderImage() {
+    public Camera renderImage() {
         if (p0 == null || vTo == null || vUp == null || vRight == null || distanceFromVP == 0 ||
                 heightVP == 0 || widthVP == 0 || imageWriter == null || rayTracerBase == null)
             throw new MissingResourceException("Not all parameters are initialized", "", "");
@@ -125,34 +126,37 @@ public class Camera {
 
         for (int i = 0; i < nX; ++i)
             for (int j = 0; j < nY; ++j) {
-                 imageWriter.writePixel(j, i, castRay(i, j));
+                imageWriter.writePixel(j, i, castRay(i, j));
             }
 
         writeToImage();
 
+        return this;
     }
 
     /**
      * Make ray through the pixel (i,j)
      * and return the calculator color in the closest point intersection.
+     *
      * @param i of the pixel.
      * @param j of the pixel.
      * @return Color.
      */
-    public Color castRay(int i, int j){
+    public Color castRay(int i, int j) {
         Ray ray = constructRay(imageWriter.getNx(), imageWriter.getNy(), j, i);
         return rayTracerBase.traceRay(ray);
     }
 
     /**
      * Print grid on the image.
+     *
      * @param interval from pixel to pixel.
-     * @param color of the grid.
+     * @param color    of the grid.
      */
-    public void  printGrid(int interval, Color color){
-        if(imageWriter == null)
+    public void printGrid(int interval, Color color) {
+        if (imageWriter == null)
             throw new MissingResourceException("Don't exist image", "Camera"
-                    ,"Initialize 'imageWriter' with function 'setImageWriter'.");
+                    , "Initialize 'imageWriter' with function 'setImageWriter'.");
 
         int nX = imageWriter.getNx();
         int nY = imageWriter.getNy();
@@ -170,12 +174,14 @@ public class Camera {
      * active the writeToImage of the imageWriter <br>
      * (we need that for keep know only your near friend)
      */
-    public  void writeToImage(){
-        if(imageWriter == null)
+    public Camera writeToImage() {
+        if (imageWriter == null)
             throw new MissingResourceException("Don't exist image", "Camera"
-                    ,"Initialize 'imageWriter' with function 'setImageWriter'.");
+                    , "Initialize 'imageWriter' with function 'setImageWriter'.");
 
         imageWriter.writeToImage();
+
+        return this;
     }
 
     /**

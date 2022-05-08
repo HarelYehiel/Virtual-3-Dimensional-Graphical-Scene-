@@ -63,7 +63,11 @@ public abstract class Intersectable {
      * @param ray
      * @return list of intersection points between ray and geometry.
      */
-    public abstract List<Point> findIntersections(Ray ray);
+    public List<Point> findIntersections(Ray ray) {
+        var geoList = findGeoIntersections(ray);
+        return geoList == null ? null
+                : geoList.stream().map(gp -> gp.point).toList();
+    }
 
     public List<GeoPoint> findGeoIntersections(Ray ray){
        return findGeoIntersectionsHelper(ray);
