@@ -24,7 +24,7 @@ public class Triangle extends Polygon{
      * @return list of intersection Geopoints between ray and triangle.
      */
     @Override
-    public List<GeoPoint> findGeoIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray,double maxDistance) {
         List<Point> result = plane.findIntersections(ray);
         if (result == null) {
             return null;
@@ -53,7 +53,9 @@ public class Triangle extends Polygon{
                 || !(Util.checkSign(NdotProductDir2, NdotProductDir0)))
             return null;
 
-        GeoPoint geoPoint = new GeoPoint(this, result.get(0));
-        return List.of(geoPoint);
+        double distance = result.get(0).distance(ray.getP0());
+
+        return Util.alignZero( distance - maxDistance) <= 0 ? List.of(new GeoPoint(this, result.get(0))) : null;
+
     }
 }

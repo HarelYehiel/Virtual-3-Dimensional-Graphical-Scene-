@@ -51,11 +51,11 @@ public class Geometries extends Intersectable{
      * in list 'this.geometries'.
      */
     @Override
-    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance) {
         List<GeoPoint> pointIntersections = new LinkedList<>();
         int sizeOfGeometries = geometries.size();
         for (int i = 0; i < sizeOfGeometries; ++i){
-            List<GeoPoint> help = geometries.get(i).findGeoIntersections(ray);
+            List<GeoPoint> help = geometries.get(i).findGeoIntersections(ray, maxDistance);
             if(help != null)
                 pointIntersections.addAll(help);
         }

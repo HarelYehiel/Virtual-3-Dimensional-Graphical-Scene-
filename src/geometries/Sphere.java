@@ -2,7 +2,7 @@ package geometries;
 
 import primitives.Point;
 import primitives.Vector;
-import primitives.Ray;
+import primitives.*;
 import static primitives.Util.*;
 import java.util.LinkedList;
 import java.util.List;
@@ -59,7 +59,7 @@ public class Sphere extends Geometry {
     }
 
     @Override
-    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance) {
   /*
         Based on this:
         Ray points: 𝑃 = 𝑃0 + 𝑡∙𝑣, 𝑡>0
@@ -85,11 +85,18 @@ public class Sphere extends Geometry {
         double th = alignZero(Math.sqrt((this.radius * this.radius) - (d * d)));
         double t1 = alignZero(tm - th);
         double t2 = alignZero(tm + th);
+
         // check it t > 0 if so then there is intersection and if not there isn't
-        if (t1 > 0)
-            result.add(new GeoPoint(this,ray.getPoint(t1)));
-        if (t2 > 0)
-            result.add(new GeoPoint(this,ray.getPoint(t2)));
+        if (t1 > 0) {
+            double distance1 = ray.getPoint(t1).distance(ray.getP0());
+            if (Util.alignZero(distance1 - maxDistance) <= 0)
+                result.add(new GeoPoint(this, ray.getPoint(t1)));
+        }
+        if (t2 > 0) {
+            double distance2 = ray.getPoint(t2).distance(ray.getP0());
+            if (Util.alignZero(distance2 - maxDistance) <= 0)
+                result.add(new GeoPoint(this, ray.getPoint(t2)));
+        }
         //check if there is intersections
         if (!result.isEmpty())
             return result;

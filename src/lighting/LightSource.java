@@ -8,6 +8,7 @@ public interface LightSource {
 
     /**
      * Get Intensity
+     *
      * @param p
      * @return
      */
@@ -15,8 +16,11 @@ public interface LightSource {
 
     /**
      * Get L
+     *
      * @param p
      * @return
      */
     public Vector getL(Point p);
+
+    public double getDistance(Point point);
 }
