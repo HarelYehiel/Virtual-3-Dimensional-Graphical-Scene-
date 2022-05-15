@@ -9,8 +9,18 @@ import geometries.Intersectable.GeoPoint;
  */
 public class Ray {
 
-    final Point p0;
-    final Vector dir;
+    /**
+     * p0 is the start of ray
+     */
+    private Point p0;
+    /**
+     * the direction of ray
+     */
+    private Vector dir;
+    /**
+     * const for move head ray shadow
+     */
+    private static final double DELTA = 0.1;
 
     /**
      * Constructor that initialize the p0 and dir.
@@ -21,6 +31,21 @@ public class Ray {
     public Ray(Point p, Vector v) {
         p0 = p;
         dir = v.normalize();
+    }
+
+    /**
+     * ctor for for ray tracer(class)
+     *
+     * @param head      of the ray
+     * @param direction dir of ray
+     * @param normal    normal for find the delta
+     *
+     */
+    public Ray(Point head, Vector direction, Vector normal) {
+        this.dir = direction.normalize();
+        double sign = Util.alignZero(dir.dotProduct(normal));
+        head = head.add(normal.scale(sign > 0 ? DELTA : -DELTA));
+        this.p0 = head;
     }
 
     /**

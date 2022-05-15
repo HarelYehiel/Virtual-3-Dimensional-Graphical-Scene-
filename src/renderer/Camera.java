@@ -38,6 +38,75 @@ public class Camera {
     }
 
     /**
+     * Changing the direction of camera Head it mean the vto vector
+     *
+     * @param target point to direct the vTo of camera<br>
+     *               In fact, this is the point you want the camera to take
+     * @return this the camera itself for builder design
+     */
+    public Camera setCameraHead(Point target) {
+        Vector v1 = target.subtract(p0).normalize();
+        try {
+            vRight = v1.crossProduct(new Vector(0, 0, 1)).normalize();
+        } catch (Exception e) {
+            vRight = new Vector(0, -1, 0);
+        }
+        vUp = vRight.crossProduct(v1).normalize();
+        vTo = v1;
+        return this;
+    }
+
+    /**
+     * Rotate the camera Horizontally Builder pattern This <br>
+     * function change the angle of vRight & vUp along vTo direction the angle
+     * change Counterclockwise by the vTo axis!
+     *
+     * @param angle the angle to change by Degrees,for Rotate the camera
+     *              Horizontally
+     * @return this the camera itself for builder design
+     */
+    public Camera rotateHorizontally(double angle) {
+        // change to degrees
+        double cosAngle = Math.cos((angle * Math.PI) / 180);
+        double sinAngle = Math.sin((angle * Math.PI) / 180);
+        vRight = rotateHorizontallyHelp(vRight, cosAngle, sinAngle);
+        vUp = rotateHorizontallyHelp(vUp, cosAngle, sinAngle);
+        return this;
+    }
+
+    /**
+     * rotate Horizontally Help function
+     * for shortcut the code
+     *
+     * @param v        vector for return rotated by the degree
+     * @param cosAngle cos Angle in radian
+     * @param sinAngle sin Angle in radian
+     * @return vector rotated by the degree
+     */
+    private Vector rotateHorizontallyHelp(Vector v, double cosAngle, double sinAngle) {
+        // formula :
+        // Vfinal = V * cos(angle) + (K x V) * sin(angle) + K * (K dot V) * (1 -
+        // cos(angle))
+        // vfinal = the vector we want to turn by tta degree
+        // K= the vector Axis of rotation(vector how don't change)
+        // V= vector are supusd to rotate and finely will changed
+        boolean cosZero = Util.isZero(cosAngle);
+        boolean sinZero = Util.isZero(sinAngle);
+        Vector vFinal;
+        if (cosZero) {
+            vFinal = vTo.crossProduct(v).scale(sinAngle);
+        } else {
+            vFinal = v.scale(cosAngle);
+            if (!sinZero) {
+                Point p = vFinal.add(vTo.crossProduct(v).scale(sinAngle));
+                vFinal = new Vector(new Double3(p.getX(),p.getY(),p.getZ()));
+            }
+        }
+        return vFinal.normalize();
+
+    }
+
+    /**
      * set width and height of view plane
      *
      * @param width  of view plane
