@@ -1,19 +1,25 @@
 package geometries;
 
 import primitives.Point;
+import primitives.Ray;
+import primitives.Util;
 import primitives.Vector;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import primitives.Util;
-import primitives.Ray;
 
 
 /**
  * Triangle is a polygon whit only 3 vertices
  */
 public class Triangle extends Polygon{
+
+    /**
+     * ctor with three vertices (Points3D)
+     *
+     * @param q0 Vertex of the triangle
+     * @param q1 Vertex of the triangle
+     * @param q2 Vertex of the triangle
+     */
     public Triangle(Point q0,Point q1,Point q2) {
         super(q0,q1,q2);
     }
@@ -24,7 +30,7 @@ public class Triangle extends Polygon{
      * @return list of intersection Geopoints between ray and triangle.
      */
     @Override
-    public List<GeoPoint> findGeoIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray,double maxDistance) {
         List<Point> result = plane.findIntersections(ray);
         if (result == null) {
             return null;
@@ -53,7 +59,9 @@ public class Triangle extends Polygon{
                 || !(Util.checkSign(NdotProductDir2, NdotProductDir0)))
             return null;
 
-        GeoPoint geoPoint = new GeoPoint(this, result.get(0));
-        return List.of(geoPoint);
+        double distance = result.get(0).distance(ray.getP0());
+
+        return Util.alignZero( distance - maxDistance) <= 0 ? List.of(new GeoPoint(this, result.get(0))) : null;
+
     }
 }

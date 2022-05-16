@@ -6,12 +6,41 @@ import lighting.*;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Scene is Contains all the components that <br>
+ * exist in the space we want to photograph
+ *
+ * @author yosefHaim
+ */
 public class Scene {
-    public String name;
-    public Color background;
-    public AmbientLight ambientLight;
-    public Geometries geometries;
 
+    /**
+     * name of Scene
+     */
+    public String name;
+
+    /**
+     * background of the scene (all the ray how don't <br>
+     * intersect whit body will get the color of background)<br>
+     * Default=black color
+     */
+   public Color background;
+
+    /**
+     * ambient Light of scene <br>
+     * Default=black color
+     */
+   public AmbientLight ambientLight;
+
+    /**
+     * collection of geometries shape
+     */
+   public Geometries geometries;
+
+    /**
+     * list of source light in scene <br>
+     * Default= empty list
+     */
     public List<LightSource> lights = new LinkedList<>();
 
     /**
@@ -26,8 +55,10 @@ public class Scene {
     }
 
     /**
+     * setter for LightSourceList
      *
-     * @param lights
+     * @param lights List of light
+     * @return this (scene)
      */
     public void setLights(List<LightSource> lights) {
         this.lights = lights;

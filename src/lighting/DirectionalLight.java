@@ -1,10 +1,15 @@
 package lighting;
 
 import primitives.Color;
-import primitives.Double3;
 import primitives.Point;
 import primitives.Vector;
 
+/**
+ * light source is far away - like sun
+ *
+ * @author yosefHaim
+ *
+ */
 public class DirectionalLight extends Light implements LightSource{
         private Vector direction;
 
@@ -18,6 +23,7 @@ public class DirectionalLight extends Light implements LightSource{
         this.direction = direction.normalize();
     }
 
+
     @Override
     public Color getIntensity(Point p) {
         return getIntensity();
@@ -26,5 +32,10 @@ public class DirectionalLight extends Light implements LightSource{
     @Override
     public Vector getL(Point p) {
         return direction;
+    }
+
+    @Override
+    public double getDistance(Point point){
+        return Double.POSITIVE_INFINITY;
     }
 }

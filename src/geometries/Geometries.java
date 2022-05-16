@@ -1,18 +1,22 @@
 package geometries;
 
-import primitives.Point;
 import primitives.Ray;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Geometries represent collection of Geometries shape
+ *
+ * @author yosefHaim
+ *
+ */
 public class Geometries extends Intersectable{
 
     private List<Intersectable> geometries;
 
     /**
-     * Initialization the list 'geometries'.
+     * list of geometries like sphere, triangle, tube, plane,polygon, cylinder
      */
     public Geometries(){
         geometries = new LinkedList<>();
@@ -51,11 +55,11 @@ public class Geometries extends Intersectable{
      * in list 'this.geometries'.
      */
     @Override
-    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance) {
         List<GeoPoint> pointIntersections = new LinkedList<>();
         int sizeOfGeometries = geometries.size();
         for (int i = 0; i < sizeOfGeometries; ++i){
-            List<GeoPoint> help = geometries.get(i).findGeoIntersections(ray);
+            List<GeoPoint> help = geometries.get(i).findGeoIntersections(ray, maxDistance);
             if(help != null)
                 pointIntersections.addAll(help);
         }

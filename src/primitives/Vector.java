@@ -25,7 +25,7 @@ public class Vector extends Point {
      * by element kind Double3.
      * @param dbl
      */
-    public  Vector(Double3 dbl) {
+    public Vector(Double3 dbl) {
         super(dbl);
         if (xyz.equals(Double3.ZERO))
             throw new IllegalArgumentException("Vector must be different from 0");

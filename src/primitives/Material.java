@@ -1,11 +1,46 @@
 package primitives;
 
 
-import scene.Scene;
-
+/**
+ * PDS Class - hold attenuation and shininess factors
+ *
+ * @author Alexandre
+ *
+ */
 public class Material {
+
+    /**
+     * kD - the diffusive coefficient<br>
+     * kS - the specular coefficient
+     * kT - transparency coefficient
+     * kR - reflection coefficient
+     */
     public Double3 kD = new Double3(0,0,0), kS = new Double3(0,0,0);
+    public Double3 kR = new Double3(0,0,0), kT = new Double3(0,0,0);
     public int nShininess = 0;
+
+    /**
+     * set the kR coef.
+     *
+     * @param kR the reflection coefficient
+     * @return this - Builder pattern
+     */
+    public Material setkR(Double3 kR) {
+        this.kR = kR;
+        return this;
+    }
+
+    /**
+     * set the kT coef.
+     *
+     * @param kT the transparency coefficient
+     * @return this - Builder pattern
+     */
+    public Material setkT(Double3 kT) {
+        this.kT = kT;
+
+        return this;
+    }
 
     /**
      * Set kD

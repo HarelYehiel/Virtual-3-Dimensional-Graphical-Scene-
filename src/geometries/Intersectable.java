@@ -69,9 +69,36 @@ public abstract class Intersectable {
                 : geoList.stream().map(gp -> gp.point).toList();
     }
 
-    public List<GeoPoint> findGeoIntersections(Ray ray){
-       return findGeoIntersectionsHelper(ray);
+    /**
+     * The function returns a list of geoPoints that <br>
+     * are points of intersection of the shape with the ray
+     *
+     * @param ray Gets a Ray that is supposed to cut the shape
+     * @return if there are Intersections: List<GeoPoint> Point3D <br>
+     *         else<br>
+     *         if there are no Intersections: null
+     */
+    public final List<GeoPoint> findGeoIntersections(Ray ray) {
+        return findGeoIntersections(ray, Double.POSITIVE_INFINITY);
     }
 
-    protected abstract List<GeoPoint> findGeoIntersectionsHelper(Ray ray);
+
+    public final List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
+        return findGeoIntersectionsHelper(ray, maxDistance);
+    }
+
+    /**
+     * The function returns a list of geoPoints that <br>
+     * are points of intersection of the shape with the ray
+     *
+     * @param ray         Gets a Ray that is supposed to cut the shape
+     * @param maxDistance optional for give a limit the collect of point<br>
+     *                    all the point in the list will be < maxDistance
+     * @return if there are Intersections: List<GeoPoint> Point3D all the point <br>
+     *         there distance form the begin of ray less maxDistance <br>
+     *         else<br>
+     *         if there are no Intersections: null
+     */
+    protected abstract List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance);
+
 }

@@ -2,7 +2,15 @@ package lighting;
 //import primitives.Color;
 import primitives.*;
 
+/**
+ * Ambient Light= like sun in cloudy day Lighting without<br>
+ * specific direction or source
+ *
+ * @author yosefHaim
+ *
+ */
 public class AmbientLight extends Light {
+
     /**
      * Constructor with color and double3 for initialize the intensity.
      * @param color

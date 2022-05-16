@@ -1,10 +1,14 @@
 package geometries;
 
 import primitives.Point;
-import static primitives.Util.*;
-import primitives.Vector;
 import primitives.Ray;
+import primitives.Util;
+import primitives.Vector;
+
 import java.util.List;
+
+import static primitives.Util.alignZero;
+import static primitives.Util.isZero;
 
 /**
  *  Plane is infinite linear 3D surface The class represents Plane entity in our
@@ -12,7 +16,14 @@ import java.util.List;
  */
 public class Plane extends Geometry{
 
+    /**
+     * q0 one of the point plane
+     */
     private Point q0;
+
+    /**
+     * normal vector to the plane i.e. unit vector orthogonal to the plane
+     */
     private Vector normal;
 
     /**
@@ -87,7 +98,7 @@ public class Plane extends Geometry{
      * @return list of intersection points between ray and plan.
      */
     @Override
-    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance) {
           /*
         based on this
         P0: begin point of ray
@@ -108,7 +119,11 @@ public class Plane extends Geometry{
         if (t <= 0)     //  check if ray is opposite direction of plane
             return null;
 
-        GeoPoint geoPoint = new GeoPoint(this, ray.getPoint(t));
-        return List.of(geoPoint);
+        //GeoPoint geoPoint = new GeoPoint(this, ray.getPoint(t));
+
+        double distance =  ray.getPoint(t).distance(ray.getP0());
+
+        return Util.alignZero( distance - maxDistance) <= 0 ? List.of(new GeoPoint(this,  ray.getPoint(t))) : null;
+
     }
 }
