@@ -1,17 +1,18 @@
 package renderer;
 
-import primitives.Point;
-import primitives.Ray;
-import lighting.*;
+import geometries.Intersectable.GeoPoint;
+import lighting.LightSource;
+import primitives.*;
 import scene.Scene;
 
 import java.util.List;
 
-import primitives.*;
-import geometries.Intersectable.GeoPoint;
-
-import javax.print.attribute.ResolutionSyntax;
-
+/**
+ * basic ray tracer Follows a Ray for finding color
+ *
+ * @author yosefHaim & Alexandre
+ *
+ */
 public class RayTracerBasic extends RayTracerBase {
 
     /**
@@ -29,6 +30,11 @@ public class RayTracerBasic extends RayTracerBase {
      */
     private static final Double3 INITIAL_K = new Double3(1.0);
 
+    /**
+     * ctor RayTracerBasic
+     *
+     * @param scene in which we will trace ray
+     */
     public RayTracerBasic(Scene scene) {
         super(scene);
     }
@@ -225,6 +231,7 @@ public class RayTracerBasic extends RayTracerBase {
     }
 
     /**
+     * Do the unshaded on geometries.
      * @param gp
      * @param l
      * @param n

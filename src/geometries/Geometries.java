@@ -1,18 +1,22 @@
 package geometries;
 
-import primitives.Point;
 import primitives.Ray;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Geometries represent collection of Geometries shape
+ *
+ * @author yosefHaim
+ *
+ */
 public class Geometries extends Intersectable{
 
     private List<Intersectable> geometries;
 
     /**
-     * Initialization the list 'geometries'.
+     * list of geometries like sphere, triangle, tube, plane,polygon, cylinder
      */
     public Geometries(){
         geometries = new LinkedList<>();

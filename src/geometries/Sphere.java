@@ -1,11 +1,15 @@
 package geometries;
 
 import primitives.Point;
+import primitives.Ray;
+import primitives.Util;
 import primitives.Vector;
-import primitives.*;
-import static primitives.Util.*;
+
 import java.util.LinkedList;
 import java.util.List;
+
+import static primitives.Util.alignZero;
+import static primitives.Util.isZero;
 
 /**
  * Sphere = ball 3D Sphere represent by point and radius vector args:
@@ -13,7 +17,14 @@ import java.util.List;
  */
 public class Sphere extends Geometry {
 
+    /**
+     * the center of Sphere
+     */
     private Point center;
+
+    /**
+     * the radius of Sphere
+     */
     private double radius;
 
     /**

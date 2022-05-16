@@ -1,19 +1,57 @@
 package renderer;
 
 import primitives.*;
-import scene.Scene;
 
 import java.util.MissingResourceException;
 
-
+/**
+ * present camera, point of view in three dimension
+ *
+ * @author yosefHaim <br>
+ *         JavaDocs edited by Alexandre
+ *
+ */
 public class Camera {
+
+    /**
+     * location of the Camera
+     */
     private Point p0; // Point of camera's center.
+
+    /**
+     * vector Right Hand Coordinate System
+     */
     private Vector vTo; // vector of axis Z.
+
+    /**
+     * vector Right Hand Coordinate System
+     */
     private Vector vUp; // vector of axis Y.
+
+    /**
+     * vector Right Hand Coordinate System
+     */
     private Vector vRight; // vector of axis X.
+
+    /**
+     * distance between camera and view plane width of view plane height of view
+     * plane
+     */
     private double distanceFromVP; // distance from View Plane.
+
+    /**
+     * distance between camera and view plane width of view plane height of view
+     * plane
+     */
     private double heightVP; // height View Plane.
+
+    /**
+     * distance between camera and view plane width of view plane height of view
+     * plane
+     */
     private double widthVP; // width View Plane.
+
+
     private ImageWriter imageWriter;
     private RayTracerBase rayTracerBase;
 
@@ -53,6 +91,18 @@ public class Camera {
         }
         vUp = vRight.crossProduct(v1).normalize();
         vTo = v1;
+        return this;
+    }
+
+    /**
+     * setter for location Point3d of camera Without<br>
+     * changing the state of the vectors
+     *
+     * @param posi point to replace whit the current location point
+     * @return this (camera itself )
+     */
+    public Camera setPosition(Point posi) {
+        this.p0 = posi;
         return this;
     }
 
@@ -105,6 +155,7 @@ public class Camera {
         return vFinal.normalize();
 
     }
+
 
     /**
      * set width and height of view plane

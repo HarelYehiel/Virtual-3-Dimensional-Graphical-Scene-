@@ -1,7 +1,5 @@
 package primitives;
 
-import java.util.Objects;
-
 /**
  * A point in three-dimensional space of this shape: (x,y,z)
  */
@@ -9,14 +7,20 @@ public class Point {
     protected Double3 xyz;
 
     /**
-     * Constructor that initialize this.xyz.
-     * @param x
-     * @param y
-     * @param z
+     * point Represented by three coordinate in 3D world
+     *
+     * @param x Axis
+     * @param y Axis
+     * @param z Axis
      */
     public Point(double x, double y, double z) {
         xyz = new Double3(x, y, z);
     }
+
+    /**
+     * point Represented by Double3
+     * @param dbl
+     */
     public  Point(Double3 dbl) {xyz = new Double3(dbl.d1,dbl.d2,dbl.d3);}
 
     public double getX(){return xyz.d1;}

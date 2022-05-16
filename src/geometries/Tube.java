@@ -11,7 +11,14 @@ import java.util.List;
  */
 public class Tube extends Geometry{
 
+    /**
+     * the ray of the tube he present the direction of tube
+     */
     protected Ray axisRay;
+
+    /**
+     * radius of the tube
+     */
     protected  double radius;
 
     /**
@@ -63,6 +70,7 @@ public class Tube extends Geometry{
         Point o = axisRay.getP0().add(axisRay.getDir().scale(t));
         return  p.subtract(o).normalize();
     }
+
 
     @Override
     public List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance) { return null;  }

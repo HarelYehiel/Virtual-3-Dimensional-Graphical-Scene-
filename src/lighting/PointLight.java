@@ -4,8 +4,23 @@ import primitives.Color;
 import primitives.Point;
 import primitives.Vector;
 
+/**
+ * point light represents light types like lamp or bonfire
+ *
+ * @author yosefHaim
+ *
+ */
 public class PointLight extends Light implements LightSource{
+
+    /**
+     * position of point light
+     */
     private Point position;
+
+    /**
+     * Discount coefficients <br>
+     * Fixed, linear, and square Respectively
+     */
     private double kC = 1, kL = 0, kQ = 0;
 
     /**
@@ -39,9 +54,10 @@ public class PointLight extends Light implements LightSource{
     }
 
     /**
+     * ctor for point light
      *
-     * @param color
-     * @param position
+     * @param color intensity of light
+     * @param position Light body position
      */
     public PointLight(Color color, Point position) {
         super(color);

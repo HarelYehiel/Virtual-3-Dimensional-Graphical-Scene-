@@ -4,6 +4,13 @@ import primitives.*;
 import primitives.Point;
 import primitives.Vector;
 
+/**
+ * spot light are point light Without scattering <br>
+ * With the possibility of becoming a "flashlight"
+ *
+ * @author yosefHaim
+ *
+ */
 public class SpotLight extends PointLight{
     /**
      * direction of the spot light
@@ -16,6 +23,12 @@ public class SpotLight extends PointLight{
      */
     private int sharp = 1;
 
+    /**
+     *
+     * @param color color of intensity of spot light
+     * @param position Light body location
+     * @param direction Lighting direction
+     */
     public SpotLight(Color color, Point position, Vector direction) {
         super(color, position);
         this.direction = direction.normalize();

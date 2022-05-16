@@ -1,12 +1,14 @@
 package geometries;
 
 import primitives.Point;
-import static primitives.Util.*;
-
+import primitives.Ray;
 import primitives.Util;
 import primitives.Vector;
-import primitives.Ray;
+
 import java.util.List;
+
+import static primitives.Util.alignZero;
+import static primitives.Util.isZero;
 
 /**
  *  Plane is infinite linear 3D surface The class represents Plane entity in our
@@ -14,7 +16,14 @@ import java.util.List;
  */
 public class Plane extends Geometry{
 
+    /**
+     * q0 one of the point plane
+     */
     private Point q0;
+
+    /**
+     * normal vector to the plane i.e. unit vector orthogonal to the plane
+     */
     private Vector normal;
 
     /**
