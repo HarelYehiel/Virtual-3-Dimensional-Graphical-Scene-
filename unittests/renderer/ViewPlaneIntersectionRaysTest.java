@@ -21,7 +21,7 @@ class ViewPlaneIntersectionRaysTest {
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                List<Point> l = geometry.findIntersections(camera.constructRay(3, 3, j, i));
+                List<Point> l = geometry.findIntersections(camera.constructRay(3, 3, j, i).get(0));
 
                 if (l != null)
                     count += l.size();

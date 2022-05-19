@@ -100,15 +100,15 @@ public class Sphere extends Geometry {
         // check it t > 0 if so then there is intersection and if not there isn't
         if (t1 > 0) {
             double distance1 = ray.getPoint(t1).distance(ray.getP0());
-            if (Util.alignZero(distance1 - maxDistance) <= 0)
+            if (maxDistance == Double.POSITIVE_INFINITY || Util.alignZero(distance1 - maxDistance) <= 0)
                 result.add(new GeoPoint(this, ray.getPoint(t1)));
         }
         if (t2 > 0) {
             double distance2 = ray.getPoint(t2).distance(ray.getP0());
-            if (Util.alignZero(distance2 - maxDistance) <= 0)
+            if (maxDistance == Double.POSITIVE_INFINITY || Util.alignZero(distance2 - maxDistance) <= 0)
                 result.add(new GeoPoint(this, ray.getPoint(t2)));
         }
-        //check if there is intersections
+        //check if there are intersections
         if (!result.isEmpty())
             return result;
         return null;

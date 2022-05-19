@@ -33,7 +33,8 @@ public class TenOrMoreShapesTests {
         Scene scene = new Scene("test case");
         Camera cam = new Camera(new Point(0, 10000, 5200), new Vector(0, -1, -0.5), new Vector(0, -0.5, 1))
                 .setVPDistance(13900.13562).setVPSize(3000, 3000).setCameraHead(new Point(0, 0, 500))
-                .rotateHorizontally(0);
+                .rotateHorizontally(0)
+                .setnumRaysInPixel(1000);
         scene.setBackground(new Color(java.awt.Color.blue));
         scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.blue), new Double3(0.15)));
 
@@ -100,7 +101,7 @@ public class TenOrMoreShapesTests {
                         .setkL(1E-5).setKq(1.5E-7).setSharp(3)));
 
         ImageWriter imageWriter = new ImageWriter("Newton's cradle position 1", 500, 500);
-       cam =  cam.setImageWriter(imageWriter).setRayTracerBase(new RayTracerBasic(scene));
+        cam = cam.setImageWriter(imageWriter).setRayTracerBase(new RayTracerBasic(scene));
         cam.renderImage();
         cam.writeToImage();
 
@@ -122,20 +123,17 @@ public class TenOrMoreShapesTests {
         cam.renderImage();
         cam.writeToImage();
 
-        cam =  cam.setPosition(new Point(-10000, -10000, 40000)).setCameraHead(new Point(0, 0, 0))
+        cam = cam.setPosition(new Point(-10000, -10000, 40000)).setCameraHead(new Point(0, 0, 0))
                 .rotateHorizontally(-45).setVPDistance(Math.sqrt(10000 * 10000 + 2000 * 2000) * 2)
                 .setImageWriter(new ImageWriter("Newton's cradle position 4 + rotate -45 degree", 500, 500));
-       cam.renderImage();
+        cam.renderImage();
         cam.writeToImage();
     }
+
+
 }
 
 
-
-
-
-
-//
 //    /**
 //     * Produce a picture of a some spheres with light
 //     */
@@ -147,7 +145,7 @@ public class TenOrMoreShapesTests {
 //        camera.setVPDistance(1000);
 //        camera.setVPSize(200, 200);
 //        scene.setBackground(new Color(65, 105, 225));
-//        scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.15));
+//        scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), new Double3(0.15)));
 //
 //        Color c = new Color(0, 0, 0);
 //        int x = -150;
@@ -180,14 +178,13 @@ public class TenOrMoreShapesTests {
 //                new DirectionalLight(new Color(224, 255, 255), new Vector(1, 5, 0))));
 //
 //        ImageWriter imageWriter = new ImageWriter("31 sphere and pearl", 1000, 1000);
-//        Render render = new Render().setImageWriter(imageWriter).setCamera(camera)
-//                .setRayTracer(new RayTracerBasic(scene));
+//        camera.setImageWriter(imageWriter).setRayTracerBase(new RayTracerBasic(scene));
 //        // .setMultithreading(3);
 //
-//        render.renderImage();
-//        render.writeToImage();
+//        camera.renderImage();
+//        camera.writeToImage();
 //    }
-//
+
 //    /**
 //     * tank picture (look like soryan tank)
 //     */
@@ -197,7 +194,7 @@ public class TenOrMoreShapesTests {
 //        Camera cam = new Camera(new Point(0, 10000, 5200), new Vector(0, -1, -0.5), new Vector(0, -0.5, 1))
 //                .setVPDistance(13900.13562).setVPSize(5000, 5000);
 //        scene.setBackground(new Color(java.awt.Color.blue));
-//        scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.blue), 0.15));
+//        scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.blue), new Double3(0.15)));
 //        scene.geometries.add(
 //                new Polygon(new Point(-500, -500, 500), new Point(500, -500, 500), new Point(500, -700, 250),
 //                        new Point(-500, -700, 250)).setEmission(new Color(java.awt.Color.DARK_GRAY))
@@ -252,17 +249,17 @@ public class TenOrMoreShapesTests {
 //                        new Vector(400, -1000, -1500)) //
 //                        .setKl(1E-5).setKq(1.5E-7)).setSharp(3),
 //                new SpotLight(new Color(1000, 1000, 1000), new Point(0, 1020, 700), new Vector(0, -1, 0)) //
-//                        .setKl(1E-5).setKq(1.5E-7).setSharp(5)));
+//                        .setkL(1E-5).setKq(1.5E-7).setSharp(5)));
 //
 //        ImageWriter imageWriter = new ImageWriter("Syria tank ", 1000, 1000);
-//        Render render = new Render().setImageWriter(imageWriter).setCamera(cam).setRayTracer(new RayTracerBasic(scene));
+//        cam.setImageWriter(imageWriter).setRayTracerBase(new RayTracerBasic(scene));
 //
-//        render.renderImage();
-//        render.writeToImage();
-//        render = render
-//                .setCamera(cam.setPosition(new Point(2000, 5000, 5000)).setCameraHead(new Point(0, 0, 500))
-//                        .setVPDistance(Math.sqrt(10000 * 5000)))
+//        cam.renderImage();
+//        cam.writeToImage();
+//        cam.setPosition(new Point(2000, 5000, 5000))
+//                        .setCameraHead(new Point(0, 0, 500))
+//                        .setVPDistance(Math.sqrt(10000 * 5000))
 //                .setImageWriter(new ImageWriter("Syria tank position 2", 500, 500));
-//        render.renderImage();
-//        render.writeToImage();
+//        cam.renderImage();
+//        cam.writeToImage();
 //    }
