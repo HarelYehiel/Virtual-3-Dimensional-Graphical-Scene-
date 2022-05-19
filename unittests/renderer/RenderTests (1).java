@@ -52,7 +52,8 @@ class RenderTests {
 	@Test
 	public void basicRenderMultiColorTest() {
 		Scene scene = new Scene("Test scene")//
-				.setAmbientLight(new AmbientLight(new Color(WHITE), new Double3(0.2))); //
+				.setAmbientLight(new AmbientLight(new Color(WHITE), new Double3(0.2)))
+				.setBackground(new Color(150,100,240)); //
 
 		scene.geometries.add( //
 				new Sphere(new Point(0, 0, -100), 50).setEmission(new Color(GRAY)),

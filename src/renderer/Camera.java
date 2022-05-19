@@ -2,14 +2,16 @@ package renderer;
 
 import primitives.*;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.MissingResourceException;
+import java.util.Random;
 
 /**
  * present camera, point of view in three dimension
  *
  * @author yosefHaim <br>
- *         JavaDocs edited by Alexandre
- *
+ * JavaDocs edited by Alexandre
  */
 public class Camera {
 
@@ -51,7 +53,10 @@ public class Camera {
      */
     private double widthVP; // width View Plane.
 
-
+    /**
+     * Num rays in pixel.
+     */
+    private int numRaysInPixel = 1;
     private ImageWriter imageWriter;
     private RayTracerBase rayTracerBase;
 
@@ -76,6 +81,18 @@ public class Camera {
     }
 
     /**
+     * set how much num rays in pixel
+     * the num bigger more 1.
+     * @param numRaysInPixel
+     * @return
+     */
+    public Camera setnumRaysInPixel(int numRaysInPixel) {
+
+        if (numRaysInPixel > 1) this.numRaysInPixel = numRaysInPixel;
+        return this;
+    }
+
+    /**
      * Changing the direction of camera Head it mean the vto vector
      *
      * @param target point to direct the vTo of camera<br>
@@ -95,7 +112,7 @@ public class Camera {
     }
 
     /**
-     * setter for location Point3d of camera Without<br>
+     * setter for location Point of camera Without
      * changing the state of the vectors
      *
      * @param posi point to replace whit the current location point
@@ -149,7 +166,7 @@ public class Camera {
             vFinal = v.scale(cosAngle);
             if (!sinZero) {
                 Point p = vFinal.add(vTo.crossProduct(v).scale(sinAngle));
-                vFinal = new Vector(new Double3(p.getX(),p.getY(),p.getZ()));
+                vFinal = new Vector(new Double3(p.getX(), p.getY(), p.getZ()));
             }
         }
         return vFinal.normalize();
@@ -263,8 +280,23 @@ public class Camera {
      * @return Color.
      */
     public Color castRay(int i, int j) {
-        Ray ray = constructRay(imageWriter.getNx(), imageWriter.getNy(), j, i);
-        return rayTracerBase.traceRay(ray);
+        List<Ray> rays = constructRay(imageWriter.getNx(), imageWriter.getNy(), j, i);
+
+        Color rangeColor = rayTracerBase.traceRay(rays.get(0));
+
+        int asdd = 0;
+        java.awt.Color c = rangeColor.getColor();
+        if (c != java.awt.Color.black)
+            asdd = 1;
+
+        int len = rays.size();
+        for (int k = 1; k < len; ++k) {
+            rangeColor = rangeColor.add(rayTracerBase.traceRay(rays.get(k)));
+        }
+        if (len > 1)
+            rangeColor = rangeColor.scale((double) 1 / len);
+
+        return rangeColor;
     }
 
     /**
@@ -305,6 +337,28 @@ public class Camera {
     }
 
     /**
+     * @param topNumber
+     * @param lowerNumber
+     * @return
+     */
+    private double randomNumber(double lowerNumber, double topNumber) {
+        if (lowerNumber > topNumber) {
+            double save = lowerNumber;
+            lowerNumber = topNumber;
+            topNumber = save;
+        }
+
+        Random random = new Random();
+        double res = 1;
+        do {
+            res = random.nextDouble(lowerNumber, topNumber);
+        } while (res == 0);
+
+        return res;
+
+    }
+
+    /**
      * Make ray from camera's center to pixel.
      *
      * @param nX sum of columns (row width).
@@ -313,7 +367,7 @@ public class Camera {
      * @param i  row of pixel.
      * @return Ray
      */
-    public Ray constructRay(int nX, int nY, int j, int i) {
+    public List<Ray> constructRay(int nX, int nY, int j, int i) {
         Point pc = p0.add(vTo.scale(distanceFromVP));
 
         if (!Util.isZero(distanceFromVP)) {
@@ -332,8 +386,24 @@ public class Camera {
             pIJ = pIJ.add(vUp.scale(-yI));
         Vector vIJ = pIJ.subtract(p0);
 
-        return new Ray(p0, new Vector(vIJ.getX(), vIJ.getY(), vIJ.getZ()));
+        List<Ray> listOfRaysInPixel = new LinkedList<>();
+        // The ray through the center of the pixel be in the first var in the list.
+        listOfRaysInPixel.add(new Ray(p0, new Vector(vIJ.getX(), vIJ.getY(), vIJ.getZ())));
+
+
+        if(numRaysInPixel > 1) {
+            double halfNx = rX / 2;
+            double halfNy = rY / 2;
+            Point saveCenterOfPixel = pIJ;
+
+            for (int k = 1; k < numRaysInPixel; ++k) {
+                pIJ = pIJ.add(vRight.scale(randomNumber(-halfNx, halfNx)));
+                pIJ = pIJ.add(vUp.scale(randomNumber(-halfNy, halfNy)));
+                vIJ = pIJ.subtract(p0);
+                listOfRaysInPixel.add(new Ray(p0, new Vector(vIJ.getX(), vIJ.getY(), vIJ.getZ())));
+                pIJ = saveCenterOfPixel;
+            }
+        }
+        return listOfRaysInPixel;
     }
-
-
 }
