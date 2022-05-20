@@ -57,6 +57,8 @@ public class Camera {
      * Num rays in pixel.
      */
     private int numRaysInPixel = 1;
+
+
     private ImageWriter imageWriter;
     private RayTracerBase rayTracerBase;
 
@@ -83,8 +85,8 @@ public class Camera {
     /**
      * set how much num rays in pixel
      * the num bigger more 1.
-     * @param numRaysInPixel
-     * @return
+     * @param numRaysInPixel get the num rays in each pixel
+     * @return this Camera, Build
      */
     public Camera setnumRaysInPixel(int numRaysInPixel) {
 
@@ -272,8 +274,8 @@ public class Camera {
     }
 
     /**
-     * Make ray through the pixel (i,j)
-     * and return the calculator color in the closest point intersection.
+     * Make rays through the pixel (i,j)
+     * and return the calculator average color in the closest points intersection.
      *
      * @param i of the pixel.
      * @param j of the pixel.
@@ -283,11 +285,6 @@ public class Camera {
         List<Ray> rays = constructRay(imageWriter.getNx(), imageWriter.getNy(), j, i);
 
         Color rangeColor = rayTracerBase.traceRay(rays.get(0));
-
-        int asdd = 0;
-        java.awt.Color c = rangeColor.getColor();
-        if (c != java.awt.Color.black)
-            asdd = 1;
 
         int len = rays.size();
         for (int k = 1; k < len; ++k) {
@@ -359,7 +356,7 @@ public class Camera {
     }
 
     /**
-     * Make ray from camera's center to pixel.
+     * Make rays from each pixel.
      *
      * @param nX sum of columns (row width).
      * @param nY sum of rows (column height).
