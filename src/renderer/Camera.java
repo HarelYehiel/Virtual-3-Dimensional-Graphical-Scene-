@@ -5,7 +5,9 @@ import primitives.*;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.MissingResourceException;
+import java.util.stream.*;
 import java.util.Random;
+
 
 /**
  * present camera, point of view in three dimension
@@ -58,6 +60,20 @@ public class Camera {
      */
     private int numRaysInPixel = 1;
 
+    /**
+     * Num of threads count
+     */
+    boolean trueOnMultipleThreads = true;
+
+    /**
+     * How often time to print interval (in second).
+     */
+    int printInterval = 0;
+
+    /**
+     *
+     */
+    int maxDeepInPixel = 4;
 
     private ImageWriter imageWriter;
     private RayTracerBase rayTracerBase;
@@ -85,6 +101,7 @@ public class Camera {
     /**
      * set how much num rays in pixel
      * the num bigger more 1.
+     *
      * @param numRaysInPixel get the num rays in each pixel
      * @return this Camera, Build
      */
@@ -110,6 +127,26 @@ public class Camera {
         }
         vUp = vRight.crossProduct(v1).normalize();
         vTo = v1;
+        return this;
+    }
+
+    /**
+     * set for Threads Count.
+     *
+     * @param threadsCount
+     */
+    public Camera setTrueOnMultipleThreads(boolean threadsCount) {
+        this.trueOnMultipleThreads = threadsCount;
+        return this;
+    }
+
+    /**
+     * set for Print Interval.
+     *
+     * @param printInterval
+     */
+    public Camera setPrintInterval(int printInterval) {
+        this.printInterval = printInterval;
         return this;
     }
 
@@ -159,6 +196,7 @@ public class Camera {
         // vfinal = the vector we want to turn by tta degree
         // K= the vector Axis of rotation(vector how don't change)
         // V= vector are supusd to rotate and finely will changed
+
         boolean cosZero = Util.isZero(cosAngle);
         boolean sinZero = Util.isZero(sinAngle);
         Vector vFinal;
@@ -260,13 +298,39 @@ public class Camera {
                 heightVP == 0 || widthVP == 0 || imageWriter == null || rayTracerBase == null)
             throw new MissingResourceException("Not all parameters are initialized", "", "");
 
+
         int nX = imageWriter.getNx();
         int nY = imageWriter.getNy();
 
-        for (int i = 0; i < nX; ++i)
-            for (int j = 0; j < nY; ++j) {
-                imageWriter.writePixel(j, i, castRay(i, j));
-            }
+        if (trueOnMultipleThreads) {
+
+            Pixel.initialize(nY, nX, printInterval);
+            IntStream.range(0, nY).parallel().forEach(i -> {
+                IntStream.range(0, nX).parallel().forEach(j -> {
+                    imageWriter.writePixel(j, i, castRay(i, j));
+                    Pixel.pixelDone();
+                    Pixel.printPixel();
+
+                });
+            });
+
+
+//            Pixel.initialize(nY, nX, printInterval);
+//            while (threadsCount-- > 0) {
+//                new Thread(() -> {
+//                    for (Pixel pixel = new Pixel(); pixel.nextPixel(); Pixel.pixelDone())
+//                        imageWriter.writePixel(pixel.row, pixel.col, castRay(pixel.col, pixel.row));
+//                }).start();
+//            }
+
+            Pixel.waitToFinish();
+        } else {
+
+            for (int i = 0; i < nX; ++i)
+                for (int j = 0; j < nY; ++j) {
+                    imageWriter.writePixel(j, i, castRay(i, j));
+                }
+        }
 
         writeToImage();
 
@@ -388,7 +452,7 @@ public class Camera {
         listOfRaysInPixel.add(new Ray(p0, new Vector(vIJ.getX(), vIJ.getY(), vIJ.getZ())));
 
 
-        if(numRaysInPixel > 1) {
+        if (numRaysInPixel > 1) {
             double halfNx = rX / 2;
             double halfNy = rY / 2;
             Point saveCenterOfPixel = pIJ;
@@ -402,5 +466,81 @@ public class Camera {
             }
         }
         return listOfRaysInPixel;
+    }
+
+    public Camera setMultithreading(int i) {
+        return this;
+    }
+
+    public Camera setDebugPrint(double v) {
+        return this;
+    }
+
+    /**
+     * @param centerPixel
+     * @param width
+     * @param length
+     */
+    private Color DeepInPixel(int deep, Point centerPixel, double width, double length) {
+
+        width = width / 2;
+        length = length / 2;
+        List<Point> points = new LinkedList<>();
+        points.add(new Point(centerPixel.getX() + width, centerPixel.getY() + length, centerPixel.getZ()));
+        points.add(new Point(centerPixel.getX() + width, centerPixel.getY() - length, centerPixel.getZ()));
+        points.add(new Point(centerPixel.getX() - width, centerPixel.getY() + length, centerPixel.getZ()));
+        points.add(new Point(centerPixel.getX() - width, centerPixel.getY() - length, centerPixel.getZ()));
+
+        Vector vIJ = centerPixel.subtract(p0);
+        Color colorCenterPixel = rayTracerBase.traceRay(new Ray(p0, new Vector(vIJ.getX(), vIJ.getY(), vIJ.getZ())));
+
+        boolean differentColor = false;
+        for (Point point : points) {
+            vIJ = point.subtract(p0);
+            Color colorSecond = rayTracerBase.traceRay(new Ray(p0, new Vector(vIJ.getX(), vIJ.getY(), vIJ.getZ())));
+
+            if (!colorCenterPixel.equals(colorSecond)) {
+                differentColor = true;
+                break;
+            }
+        }
+
+        Color sumColor = Color.BLACK;
+        if (differentColor && deep < maxDeepInPixel) {
+            sumColor.add(DeepInPixel(deep + 1,
+                    new Point(centerPixel.getX() - width / 2, centerPixel.getY() + length / 2, centerPixel.getZ()),
+                    width, length));
+
+            sumColor.add(DeepInPixel(deep + 1,
+                    new Point(centerPixel.getX() + width / 2, centerPixel.getY() + length / 2, centerPixel.getZ()),
+                    width, length));
+
+            sumColor.add(DeepInPixel(deep + 1,
+                    new Point(centerPixel.getX() - width / 2, centerPixel.getY() - length / 2, centerPixel.getZ()),
+                    width, length));
+
+            sumColor.add(DeepInPixel(deep + 1,
+                    new Point(centerPixel.getX() + width / 2, centerPixel.getY() - length / 2, centerPixel.getZ()),
+                    width, length));
+        }
+        else if(differentColor && deep == maxDeepInPixel){
+            List<Ray> listOfRaysInPixel = new LinkedList<>();
+            Point saveCenterOfPixel = centerPixel;
+
+            for (int k = 1; k < numRaysInPixel/Math.pow(4,deep); ++k) {
+                centerPixel = centerPixel.add(vRight.scale(randomNumber(-width, width)));
+                centerPixel = centerPixel.add(vUp.scale(randomNumber(-length, length)));
+                vIJ = centerPixel.subtract(p0);
+                listOfRaysInPixel.add(new Ray(p0, new Vector(vIJ.getX(), vIJ.getY(), vIJ.getZ())));
+                centerPixel = saveCenterOfPixel;
+            }
+            for(Ray ray : listOfRaysInPixel)
+                sumColor.add(rayTracerBase.traceRay(ray));
+
+        }
+        else
+            return colorCenterPixel.scale(numRaysInPixel/Math.pow(4,deep));
+
+        return sumColor;
     }
 }

@@ -1,15 +1,15 @@
 package renderer;
 
+import geometries.Intersectable;
+import geometries.Sphere;
+import geometries.Triangle;
+import lighting.AmbientLight;
+import lighting.SpotLight;
 import org.junit.jupiter.api.Test;
-
-import static java.awt.Color.*;
-
-import renderer.ImageWriter;
-import lighting.*;
-import geometries.*;
 import primitives.*;
-import renderer.*;
 import scene.Scene;
+
+import static java.awt.Color.BLUE;
 
 /**
  * Testing basic shadows
@@ -113,7 +113,9 @@ public class ShadowTests {
 
 		camera.setImageWriter(new ImageWriter("shadowTrianglesSphere", 600, 600)) //
 				.renderImage() //
-				.writeToImage();
+				.writeToImage()
+				.setnumRaysInPixel(1)
+				.setTrueOnMultipleThreads(true);
 	}
 
 }

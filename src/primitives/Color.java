@@ -141,4 +141,12 @@ public class Color {
 			throw new IllegalArgumentException("Can't scale a color by a by a number lower than 1");
 		return new Color(rgb.d1 / k.d1, rgb.d2 / k.d2, rgb.d3 / k.d3);
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Color color = (Color) o;
+		return rgb.equals(color.rgb);
+	}
 }
