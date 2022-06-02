@@ -63,7 +63,7 @@ public class Camera {
     /**
      * Num of threads count
      */
-    boolean trueOnMultipleThreads = true;
+    boolean trueOnMultipleThreads = false;
 
     /**
      * How often time to print interval (in second).
@@ -73,7 +73,7 @@ public class Camera {
     /**
      *
      */
-    int maxDeepInPixel = 4;
+    int maxDeepInPixel = 1;
 
     private ImageWriter imageWriter;
     private RayTracerBase rayTracerBase;
@@ -302,6 +302,7 @@ public class Camera {
         int nX = imageWriter.getNx();
         int nY = imageWriter.getNy();
 
+        int gg = 0;
         if (trueOnMultipleThreads) {
 
             Pixel.initialize(nY, nX, printInterval);
@@ -328,6 +329,8 @@ public class Camera {
 
             for (int i = 0; i < nX; ++i)
                 for (int j = 0; j < nY; ++j) {
+                    if(i == nX - 100 && j == nY - 100)
+                        gg = 1;
                     imageWriter.writePixel(j, i, castRay(i, j));
                 }
         }
@@ -346,18 +349,43 @@ public class Camera {
      * @return Color.
      */
     public Color castRay(int i, int j) {
-        List<Ray> rays = constructRay(imageWriter.getNx(), imageWriter.getNy(), j, i);
+        if (false) {
+            List<Ray> rays = constructRay(imageWriter.getNx(), imageWriter.getNy(), j, i);
 
-        Color rangeColor = rayTracerBase.traceRay(rays.get(0));
+            Color rangeColor = rayTracerBase.traceRay(rays.get(0));
 
-        int len = rays.size();
-        for (int k = 1; k < len; ++k) {
-            rangeColor = rangeColor.add(rayTracerBase.traceRay(rays.get(k)));
+            int len = rays.size();
+            for (int k = 1; k < len; ++k) {
+                rangeColor = rangeColor.add(rayTracerBase.traceRay(rays.get(k)));
+            }
+            if (len > 1)
+                rangeColor = rangeColor.scale((double) 1 / len);
+
+            return rangeColor;
+        } else
+            return DeepInPixel(0, getCenterPixel(i, j, imageWriter.getNx(), imageWriter.getNy())
+                    , imageWriter.getNx(), imageWriter.getNy()).scale(1.0 / numRaysInPixel);
+    }
+
+    private Point getCenterPixel(int i, int j, double nX, double nY) {
+        Point pc = p0.add(vTo.scale(distanceFromVP));
+
+        if (!Util.isZero(distanceFromVP)) {
+            pc = p0.add(vTo.scale(distanceFromVP));
         }
-        if (len > 1)
-            rangeColor = rangeColor.scale((double) 1 / len);
 
-        return rangeColor;
+        double rY = heightVP / nY;
+        double rX = widthVP / nX;
+        double yI = (i - (double) (nY - 1) / 2) * rY;
+        double xJ = (j - (double) (nX - 1) / 2) * rX;
+
+        Point pIJ = pc;
+        if (xJ != 0)
+            pIJ = pIJ.add(vRight.scale(xJ));
+        if (yI != 0)
+            pIJ = pIJ.add(vUp.scale(-yI));
+
+        return pIJ;
     }
 
     /**
@@ -493,11 +521,11 @@ public class Camera {
 
         Vector vIJ = centerPixel.subtract(p0);
         Color colorCenterPixel = rayTracerBase.traceRay(new Ray(p0, new Vector(vIJ.getX(), vIJ.getY(), vIJ.getZ())));
-
+        Color colorSecond = new Color(1, 1, 1);
         boolean differentColor = false;
         for (Point point : points) {
             vIJ = point.subtract(p0);
-            Color colorSecond = rayTracerBase.traceRay(new Ray(p0, new Vector(vIJ.getX(), vIJ.getY(), vIJ.getZ())));
+            colorSecond = rayTracerBase.traceRay(new Ray(p0, new Vector(vIJ.getX(), vIJ.getY(), vIJ.getZ())));
 
             if (!colorCenterPixel.equals(colorSecond)) {
                 differentColor = true;
@@ -505,42 +533,44 @@ public class Camera {
             }
         }
 
+        boolean Iin = false;
         Color sumColor = Color.BLACK;
         if (differentColor && deep < maxDeepInPixel) {
-            sumColor.add(DeepInPixel(deep + 1,
+            sumColor = sumColor.add(DeepInPixel(deep + 1,
                     new Point(centerPixel.getX() - width / 2, centerPixel.getY() + length / 2, centerPixel.getZ()),
                     width, length));
 
-            sumColor.add(DeepInPixel(deep + 1,
+            sumColor = sumColor.add(DeepInPixel(deep + 1,
                     new Point(centerPixel.getX() + width / 2, centerPixel.getY() + length / 2, centerPixel.getZ()),
                     width, length));
 
-            sumColor.add(DeepInPixel(deep + 1,
+            sumColor = sumColor.add(DeepInPixel(deep + 1,
                     new Point(centerPixel.getX() - width / 2, centerPixel.getY() - length / 2, centerPixel.getZ()),
                     width, length));
 
-            sumColor.add(DeepInPixel(deep + 1,
+            sumColor = sumColor.add(DeepInPixel(deep + 1,
                     new Point(centerPixel.getX() + width / 2, centerPixel.getY() - length / 2, centerPixel.getZ()),
                     width, length));
-        }
-        else if(differentColor && deep == maxDeepInPixel){
+
+            Iin = true;
+        } else if (differentColor && deep == maxDeepInPixel) {
             List<Ray> listOfRaysInPixel = new LinkedList<>();
             Point saveCenterOfPixel = centerPixel;
 
-            for (int k = 1; k < numRaysInPixel/Math.pow(4,deep); ++k) {
+            for (int k = 1; k < numRaysInPixel / Math.pow(4, deep); ++k) {
                 centerPixel = centerPixel.add(vRight.scale(randomNumber(-width, width)));
                 centerPixel = centerPixel.add(vUp.scale(randomNumber(-length, length)));
                 vIJ = centerPixel.subtract(p0);
-                listOfRaysInPixel.add(new Ray(p0, new Vector(vIJ.getX(), vIJ.getY(), vIJ.getZ())));
+                listOfRaysInPixel.add(new Ray(p0, vIJ));
                 centerPixel = saveCenterOfPixel;
             }
-            for(Ray ray : listOfRaysInPixel)
-                sumColor.add(rayTracerBase.traceRay(ray));
+            for (Ray ray : listOfRaysInPixel)
+                sumColor = sumColor.add(rayTracerBase.traceRay(ray));
+        } else
+            return colorCenterPixel.scale(numRaysInPixel / Math.pow(4, deep));
 
-        }
-        else
-            return colorCenterPixel.scale(numRaysInPixel/Math.pow(4,deep));
-
+        if (deep == 0 && Iin)
+            return sumColor;
         return sumColor;
     }
 }
