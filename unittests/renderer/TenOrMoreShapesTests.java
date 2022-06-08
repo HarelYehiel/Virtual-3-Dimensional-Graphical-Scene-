@@ -111,23 +111,23 @@ public class TenOrMoreShapesTests {
         cam.writeToImage();
 
 
-        cam = cam.setPosition(new Point(-7000, 20000, 40000)).setCameraHead(new Point(0, 0, 500))
-                .setVPDistance(Math.sqrt(10000 * 10000 + 2000 * 2000) * 2 * 2)
-                .setImageWriter(new ImageWriter("Newton's cradle position 3", 500, 500));
-        cam.renderImage();
-        cam.writeToImage();
-
-        cam = cam.setPosition(new Point(-10000, -10000, 40000)).setCameraHead(new Point(0, 0, 0))
-                .setVPDistance(Math.sqrt(10000 * 10000 + 2000 * 2000) * 2)
-                .setImageWriter(new ImageWriter("Newton's cradle position 4", 500, 500));
-        cam.renderImage();
-        cam.writeToImage();
-
-        cam = cam.setPosition(new Point(-10000, -10000, 40000)).setCameraHead(new Point(0, 0, 0))
-                .rotateHorizontally(-45).setVPDistance(Math.sqrt(10000 * 10000 + 2000 * 2000) * 2)
-                .setImageWriter(new ImageWriter("Newton's cradle position 4 + rotate -45 degree", 500, 500));
-        cam.renderImage();
-        cam.writeToImage();
+//        cam = cam.setPosition(new Point(-7000, 20000, 40000)).setCameraHead(new Point(0, 0, 500))
+//                .setVPDistance(Math.sqrt(10000 * 10000 + 2000 * 2000) * 2 * 2)
+//                .setImageWriter(new ImageWriter("Newton's cradle position 3", 500, 500));
+//        cam.renderImage();
+//        cam.writeToImage();
+//
+//        cam = cam.setPosition(new Point(-10000, -10000, 40000)).setCameraHead(new Point(0, 0, 0))
+//                .setVPDistance(Math.sqrt(10000 * 10000 + 2000 * 2000) * 2)
+//                .setImageWriter(new ImageWriter("Newton's cradle position 4", 500, 500));
+//        cam.renderImage();
+//        cam.writeToImage();
+//
+//        cam = cam.setPosition(new Point(-10000, -10000, 40000)).setCameraHead(new Point(0, 0, 0))
+//                .rotateHorizontally(-45).setVPDistance(Math.sqrt(10000 * 10000 + 2000 * 2000) * 2)
+//                .setImageWriter(new ImageWriter("Newton's cradle position 4 + rotate -45 degree", 500, 500));
+//        cam.renderImage();
+//        cam.writeToImage();
     }
 
 

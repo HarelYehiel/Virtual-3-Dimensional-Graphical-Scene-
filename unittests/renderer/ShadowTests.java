@@ -115,7 +115,7 @@ public class ShadowTests {
 				.renderImage() //
 				.writeToImage()
 				.setnumRaysInPixel(1)
-				.setTrueOnMultipleThreads(false);
+				.setTrueOnMultipleThreads(true);
 	}
 
 }
